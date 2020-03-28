@@ -30,7 +30,8 @@ namespace PredlaganjeSaradnjeIRC
             services.AddControllers();
             services.AddSingleton(Configuration);
 
-            services.AddDbContext<AplikacijaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IRCConnection")));
+            services.AddDbContext<ApplicationContext>
+                (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
