@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PredlaganjeSaradnjeIRC", "PredlaganjeSaradnjeIRC\PredlaganjeSaradnjeIRC.csproj", "{9A36E977-BC6F-4377-9209-53C4EF6BD731}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PredlaganjeSaradnjeIRC", "PredlaganjeSaradnjeIRC\PredlaganjeSaradnjeIRC.csproj", "{9A36E977-BC6F-4377-9209-53C4EF6BD731}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PredlaganjeSaradnjeIRC.Data", "PredlaganjeSaradnjeIRC.Data\PredlaganjeSaradnjeIRC.Data.csproj", "{B0514BE3-DF27-40D8-A564-B81283A421DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PredlaganjeSaradnjeIRC.Data", "PredlaganjeSaradnjeIRC.Data\PredlaganjeSaradnjeIRC.Data.csproj", "{B0514BE3-DF27-40D8-A564-B81283A421DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PredlaganjeSaradnjeIRC.Services", "PredlaganjeSaradnjeIRC.Services\PredlaganjeSaradnjeIRC.Services.csproj", "{11828D44-5347-4190-9858-431180B0F380}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B0514BE3-DF27-40D8-A564-B81283A421DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0514BE3-DF27-40D8-A564-B81283A421DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0514BE3-DF27-40D8-A564-B81283A421DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11828D44-5347-4190-9858-431180B0F380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11828D44-5347-4190-9858-431180B0F380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11828D44-5347-4190-9858-431180B0F380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11828D44-5347-4190-9858-431180B0F380}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
