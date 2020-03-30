@@ -1,60 +1,111 @@
-﻿using PredlaganjeSaradnjeIRC.Data.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using PredlaganjeSaradnjeIRC.Data;
+using PredlaganjeSaradnjeIRC.Data.Model;
 using PredlaganjeSaradnjeIRC.Data.Service;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PredlaganjeSaradnjeIRC.Services
 {
     public class CompanyService : ICompany
     {
+        private readonly ApplicationContext _context;
+
+        public CompanyService(ApplicationContext context)
+        {
+            _context = context;
+        }
+
         public void Add(Company newCompany)
         {
-            throw new NotImplementedException();
+            _context.Add(newCompany);
+            _context.SaveChanges();
         }
 
-        public void AddNewContact(int id, Contact newContact)
+        public bool AddNewContact(int id, Contact newContact)
         {
-            throw new NotImplementedException();
-        }
+            var company = GetById(id);
 
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
+            if (company == null)
+            {
+                return false;
+            }
+
+            company.Contacts.Append(newContact);
+
+            _context.Update(company);
+
+            return true;
         }
 
         public IEnumerable<Company> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Companies
+                .Include(company => company.Contacts)
+                .Include(company => company.Locations)
+                    .ThenInclude(location => location.City)
+                .Include(company => company.ProposalForCooperations);
         }
 
         public Company GetById(int id)
         {
-            throw new NotImplementedException();
+            return GetAll()
+                .FirstOrDefault(company => company.Id == id);
         }
 
         public IEnumerable<Contact> GetContacts(int id)
         {
-            throw new NotImplementedException();
+            return GetById(id)
+                .Contacts;
         }
 
         public Location GetLocation(int id)
         {
-            throw new NotImplementedException();
+            return GetById(id)
+                 .Locations
+                 .LastOrDefault();
         }
 
         public IEnumerable<ProposalForCooperation> GetProspalForCooperations(int id)
         {
-            throw new NotImplementedException();
+            return GetById(id)
+                .ProposalForCooperations;
         }
 
-        public void SetNewAddress(int id, Location location)
+        public bool SetNewAddress(int id, Location location)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var company = GetById(id);
+
+                company.Locations.Append(location);
+
+                _context.Update(company);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
         }
 
-        public void Update(Company company)
+        public bool Update(Company company)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Update(company);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
         }
+
     }
 }

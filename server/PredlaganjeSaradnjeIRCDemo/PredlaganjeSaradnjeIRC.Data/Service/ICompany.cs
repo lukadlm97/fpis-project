@@ -13,10 +13,9 @@ namespace PredlaganjeSaradnjeIRC.Data.Service
 
         // CRUD operation
         void Add(Company newCompany);
-        void Update(Company company);
-        void Delete(int id);
-        void SetNewAddress(int id,Location location);
-        void AddNewContact(int id,Contact newContact);
+        bool Update(Company company);
+        bool SetNewAddress(int id,Location location);
+        bool AddNewContact(int id,Contact newContact);
 
         // more info about Company
         Location GetLocation(int id);

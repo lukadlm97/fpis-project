@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PredlaganjeSaradnjeIRC.Data;
+using PredlaganjeSaradnjeIRC.Data.Service;
+using PredlaganjeSaradnjeIRC.Services;
 
 namespace PredlaganjeSaradnjeIRC
 {
@@ -29,6 +31,8 @@ namespace PredlaganjeSaradnjeIRC
         {
             services.AddControllers();
             services.AddSingleton(Configuration);
+            services.AddScoped<ICompany, CompanyService>();
+            
 
             services.AddDbContext<ApplicationContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

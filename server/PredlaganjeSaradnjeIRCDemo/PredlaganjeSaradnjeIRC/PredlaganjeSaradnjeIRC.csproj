@@ -11,10 +11,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PredlaganjeSaradnjeIRC.Data\PredlaganjeSaradnjeIRC.Data.csproj" />
+    <ProjectReference Include="..\PredlaganjeSaradnjeIRC.Services\PredlaganjeSaradnjeIRC.Services.csproj" />
   </ItemGroup>
 
 
