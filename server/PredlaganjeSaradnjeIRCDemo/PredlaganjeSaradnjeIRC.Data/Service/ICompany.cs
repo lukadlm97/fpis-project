@@ -10,9 +10,10 @@ namespace PredlaganjeSaradnjeIRC.Data.Service
         // main info about Company
         Company GetById(int id);
         IEnumerable<Company> GetAll();
+        Company GetLastInserted();
 
         // CRUD operation
-        void Add(Company newCompany);
+        bool Add(Company newCompany);
         bool Update(Company company);
         bool SetNewAddress(int id,Location location);
         bool AddNewContact(int id,Contact newContact);

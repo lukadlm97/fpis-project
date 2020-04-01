@@ -17,10 +17,17 @@ namespace PredlaganjeSaradnjeIRC.Services
             _context = context;
         }
 
-        public void Add(Company newCompany)
+        public bool Add(Company newCompany)
         {
-            _context.Add(newCompany);
-            _context.SaveChanges();
+            try
+            {
+                _context.Add(newCompany);
+                _context.SaveChanges();
+            }catch(Exception e)
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool AddNewContact(int id, Contact newContact)
@@ -58,6 +65,12 @@ namespace PredlaganjeSaradnjeIRC.Services
         {
             return GetById(id)
                 .Contacts;
+        }
+
+        public Company GetLastInserted()
+        {
+            return _context.Companies
+                .LastOrDefault();
         }
 
         public Location GetLocation(int id)
