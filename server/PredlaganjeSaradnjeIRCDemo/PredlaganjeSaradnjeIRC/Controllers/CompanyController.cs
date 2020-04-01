@@ -45,9 +45,19 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         {
             if (companyService.Add(newCompany))
             {
+                // TODO: da se vraca kompanija koja je dodat kao objekat
                 return Created("Kompanija je uspesno dodata!","");
             }
             return Forbid("Nemoguce uneti novu kompaniju!");
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Company>> UpdateCompany(int id,[FromBody] Company updatedCompany)
+        {
+            if (companyService.Update(updatedCompany))
+            {
+                return Ok("Kompanija je uspesno izmenjena!");
+            }
+            return Forbid("Nije moguce izmeniti kompaniju!");
         }
     }
 }
