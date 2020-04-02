@@ -35,7 +35,7 @@ namespace PredlaganjeSaradnjeIRC.Services
         }
         public bool Delete(int id, int contactId)
         {
-            var contact = GetById(contactId);
+            var contact = GetById(id,contactId);
 
             if(contact == null)
             {
@@ -67,11 +67,7 @@ namespace PredlaganjeSaradnjeIRC.Services
 
             return company.Contacts;
         }
-        public Contact GetById(int id)
-        {
-            return GetAll()
-                .FirstOrDefault(contact => contact.Id == id);
-        }
+
         public bool Update(int companyId, int contactId, Contact updatedContact)
         {
             var company = _context.Companies
@@ -112,6 +108,11 @@ namespace PredlaganjeSaradnjeIRC.Services
         {
             return company.Contacts
                 .FirstOrDefault(contact => contact.Id == id); 
+        }
+
+        public Contact GetById(int companyId, int contactId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace PredlaganjeSaradnjeIRC.Data.Service
 {
     public interface IContact
     {
-        Contact GetById(int id);
+        Contact GetById(int companyId,int contactId);
         IEnumerable<Contact> GetAll(int companyId);
 
         bool AddNewContact(int id,Contact newContact);

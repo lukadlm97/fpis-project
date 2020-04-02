@@ -34,7 +34,7 @@ namespace PredlaganjeSaradnjeIRC
             );
             services.AddSingleton(Configuration);
             services.AddScoped<ICompany, CompanyService>();
-            
+            services.AddScoped<IContact, ContactService>();
 
             services.AddDbContext<ApplicationContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
