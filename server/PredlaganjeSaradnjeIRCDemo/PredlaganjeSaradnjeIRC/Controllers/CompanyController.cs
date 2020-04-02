@@ -85,7 +85,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpPost("{id}/contact")]
         public async Task<ActionResult<Contact>> AddNewContact(int id,[FromBody] Contact contact)
         {
-            if (contactService.AddNewContact(id,contact))
+            if (companyService.AddNewContact(id,contact))
             {
                 // TODO: da se vraca kompanija koja je dodat kao objekat
                 return Created("Kontakt je uspesno dodat!", "");

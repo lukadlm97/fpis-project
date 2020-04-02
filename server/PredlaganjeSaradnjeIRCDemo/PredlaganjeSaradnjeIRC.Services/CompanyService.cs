@@ -38,10 +38,20 @@ namespace PredlaganjeSaradnjeIRC.Services
             {
                 return false;
             }
+            _context.Entry(company).State = EntityState.Modified;
 
-            company.Contacts.Append(newContact);
+            company.Contacts.Add(newContact);
+           // _context.Update(company);
 
-            _context.Update(company);
+            try
+            {
+                //company.Contacts = contacts;
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            { 
+                return false;
+            }
 
             return true;
         }

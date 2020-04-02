@@ -19,15 +19,19 @@ namespace PredlaganjeSaradnjeIRC.Services
         public bool AddNewContact(int id, Contact newContact)
         {
             var company = _context.Companies
-                .Include(c => c.Contacts)
-                .FirstOrDefault(company => company.Id == id);
+                                    .Include(c => c.Contacts)
+                                .FirstOrDefault(company => company.Id == id);
 
             if (company == null)
             {
                 return false;
             }
 
-            company.Contacts = new List<Contact>();
+            if(company.Contacts == null)
+            {
+                    company.Contacts = new List<Contact>();
+            }
+
             company.Contacts.Add(newContact);
 
             try
