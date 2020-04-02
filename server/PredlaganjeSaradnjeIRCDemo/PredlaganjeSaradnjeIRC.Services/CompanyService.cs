@@ -46,6 +46,28 @@ namespace PredlaganjeSaradnjeIRC.Services
             return true;
         }
 
+        public bool Delete(int id)
+        {
+            Company company = GetById(id);
+
+            if(company == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                _context.Remove(company);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public IEnumerable<Company> GetAll()
         {
             return _context.Companies

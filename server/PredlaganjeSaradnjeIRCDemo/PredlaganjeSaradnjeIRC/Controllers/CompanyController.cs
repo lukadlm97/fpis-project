@@ -59,5 +59,19 @@ namespace PredlaganjeSaradnjeIRC.Controllers
             }
             return Forbid("Nije moguce izmeniti kompaniju!");
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Company>> DeleteCompany(int id)
+        {
+            if (companyService.Delete(id))
+            {
+                return Ok("Kompanija je uspesno obrisana!");
+            }
+            return BadRequest("Kompaniju nije moguce obrisati!");
+        }
+        [HttpGet("{id}/contact")]
+        public async Task<ActionResult<Contact>> GetContactsByCompany(int id)
+        {
+
+        }
     }
 }
