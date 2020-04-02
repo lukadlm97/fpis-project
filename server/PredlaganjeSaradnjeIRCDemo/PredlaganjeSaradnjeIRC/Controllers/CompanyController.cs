@@ -92,5 +92,14 @@ namespace PredlaganjeSaradnjeIRC.Controllers
             }
             return Forbid("Nemoguce uneti novi kontakt!");
         }
+        [HttpDelete("{idCompany}/contact/{idContact}")]
+        public async Task<ActionResult<Contact>> RemoveContact(int idCompany,int idContact)
+        {
+            if (contactService.Delete(idCompany, idContact))
+            {
+                return Ok("Kontakt je uspesno obrisana!");
+            }
+            return BadRequest("Kontakt je uspesno obrisana!");
+        }
     }
 }
