@@ -14,9 +14,12 @@ namespace PredlaganjeSaradnjeIRC.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ICompany companyService;
-        public CompanyController(ICompany companyService)
+        private readonly IContact contactService;
+
+        public CompanyController(ICompany companyService,IContact contactService)
         {
             this.companyService = companyService;
+            this.contactService = contactService;
         }
 
         [HttpGet]
@@ -71,7 +74,13 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpGet("{id}/contact")]
         public async Task<ActionResult<Contact>> GetContactsByCompany(int id)
         {
+            var contacts = contactService.GetAll(id);
 
+            if (contacts == null)
+            {
+                return BadRequest("Nije moguce pronaci kontakte za zadatu kompaniju!");
+            }
+            return Ok(contacts);
         }
     }
 }
