@@ -19,6 +19,7 @@ namespace PredlaganjeSaradnjeIRC.Services
         public bool AddNewContact(int id, Contact newContact)
         {
             var company = _context.Companies
+                .Include(c => c.Contacts)
                 .FirstOrDefault(company => company.Id == id);
 
             if (company == null)
@@ -26,7 +27,7 @@ namespace PredlaganjeSaradnjeIRC.Services
                 return false;
             }
 
-            company.Contacts.Append(newContact);
+            company.Contacts.Add(newContact);
 
             _context.Update(company);
             _context.SaveChanges();
@@ -67,7 +68,6 @@ namespace PredlaganjeSaradnjeIRC.Services
 
             return company.Contacts;
         }
-
         public bool Update(int companyId, int contactId, Contact updatedContact)
         {
             var company = _context.Companies
