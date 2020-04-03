@@ -16,36 +16,23 @@ namespace PredlaganjeSaradnjeIRC.Services
         {
             _context = context;
         }
-        public bool AddNewContact(int id, Contact newContact)
+        
+        // get all contacts for company (fixed)
+        public IEnumerable<Contact> GetAll(int companyId)
         {
             var company = _context.Companies
-                                    .Include(c => c.Contacts)
-                                .FirstOrDefault(company => company.Id == id);
+                .Include(company => company.Contacts)
+                .FirstOrDefault(company => company.Id == companyId);
 
-            if (company == null)
+            if(company == null || company.Contacts == null)
             {
-                return false;
+                return null;
             }
 
-            if(company.Contacts == null)
-            {
-                    company.Contacts = new List<Contact>();
-            }
-
-            company.Contacts.Append(newContact);
-
-            try
-            {
-                _context.Update(company);
-                _context.SaveChanges();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
+            return company.Contacts;
         }
+      
+        // TODO: test update and delete for contacts
         public bool Update(int companyId, int contactId, Contact updatedContact)
         {
             var company = _context.Companies
@@ -98,23 +85,13 @@ namespace PredlaganjeSaradnjeIRC.Services
 
             return true;
         }
+        
+        
+        // Helper functions
         private void UpdateContact(ref Contact forUpdate, Contact updatedContact)
         {
             forUpdate.Content = updatedContact.Content;
             forUpdate.ContactType = updatedContact.ContactType;
-        }
-        public IEnumerable<Contact> GetAll(int companyId)
-        {
-            var company = _context.Companies
-                .Include(company => company.Contacts)
-                .FirstOrDefault(company => company.Id == companyId);
-
-            if(company == null || company.Contacts == null)
-            {
-                return null;
-            }
-
-            return company.Contacts;
         }
         public Contact FindContactById(Company company,int id)
         {

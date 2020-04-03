@@ -9,8 +9,7 @@ namespace PredlaganjeSaradnjeIRC.Data.Model
     {
         [Required]
         public int Id { get; set; }
-        public City City { get; set; }
-        public Company Company { get; set; }
+        public virtual City City { get; set; }
         [Required]
         public string StreetName { get; set; }
         [Required]

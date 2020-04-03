@@ -14,13 +14,12 @@ namespace PredlaganjeSaradnjeIRC.Data.Service
 
         // CRUD operation
         bool Add(Company newCompany);
-        bool Update(Company company);
+        bool Update(int id,Company company);
         bool Delete(int id);
         bool AddNewContact(int id, Contact newContact);
 
         // more info about Company
         Location GetLocation(int id);
-        IEnumerable<Contact> GetContacts(int id);
         IEnumerable<ProposalForCooperation> GetProspalForCooperations(int id);
         
     }

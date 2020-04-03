@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PredlaganjeSaradnjeIRC.Data;
 
 namespace PredlaganjeSaradnjeIRC.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200403192936_add_company_fix_bug_with_location")]
+    partial class add_company_fix_bug_with_location
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,7 +246,7 @@ namespace PredlaganjeSaradnjeIRC.Data.Migrations
             modelBuilder.Entity("PredlaganjeSaradnjeIRC.Data.Model.Location", b =>
                 {
                     b.HasOne("PredlaganjeSaradnjeIRC.Data.Model.City", "City")
-                        .WithMany()
+                        .WithMany("Locations")
                         .HasForeignKey("CityId");
 
                     b.HasOne("PredlaganjeSaradnjeIRC.Data.Model.Company", null)

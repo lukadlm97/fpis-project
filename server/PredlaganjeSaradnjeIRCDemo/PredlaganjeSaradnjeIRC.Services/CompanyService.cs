@@ -11,14 +11,33 @@ namespace PredlaganjeSaradnjeIRC.Services
     public class CompanyService : ICompany
     {
         private readonly ApplicationContext _context;
+        private readonly ICity cityService;
 
         public CompanyService(ApplicationContext context)
         {
             _context = context;
+            cityService = new CityService(context);
         }
 
+        // main info about companies (fixed)
+        public IEnumerable<Company> GetAll()
+        {
+            return _context.Companies
+                .Include(company => company.Contacts)
+                .Include(company => company.Locations)
+                    .ThenInclude(location => location.City)
+                .Include(company => company.ProposalForCooperations);
+        }
+        public Company GetById(int id)
+        {
+            return GetAll()
+                .FirstOrDefault(company => company.Id == id);
+        }
+       
+        // crud operation (insert,update,delete) (fixed)
         public bool Add(Company newCompany)
         {
+            newCompany.Locations.FirstOrDefault().City = cityService.GetById(newCompany.Locations.FirstOrDefault().City.Id);
             try
             {
                 _context.Add(newCompany);
@@ -29,37 +48,6 @@ namespace PredlaganjeSaradnjeIRC.Services
             }
             return true;
         }
-
-        public bool AddNewContact(int id, Contact newContact)
-        {
-            var company = GetById(id);
-
-            if (company == null)
-            {
-                return false;
-            }
-            // _context.Entry(company).State = EntityState.Added;
-            // _context.Update(company);
-            List<Contact> contacts = company.Contacts.ToList();
-            contacts.Add(newContact);
-
-            //  company.Contacts.Append(newContact);
-            // _context.Update(company);
-
-            company.Contacts = (IEnumerable<Contact>)contacts;
-            try
-            {
-                //company.Contacts = contacts;
-                _context.SaveChanges();
-            }
-            catch (Exception e)
-            { 
-                return false;
-            }
-
-            return true;
-        }
-
         public bool Delete(int id)
         {
             Company company = GetById(id);
@@ -81,39 +69,62 @@ namespace PredlaganjeSaradnjeIRC.Services
 
             return true;
         }
-
-        public IEnumerable<Company> GetAll()
+        public bool Update(int id,Company updatedCompany)
         {
-            return _context.Companies
-                .Include(company => company.Contacts)
-                .Include(company => company.Locations)
-                    .ThenInclude(location => location.City)
-                .Include(company => company.ProposalForCooperations);
+            var company = GetById(id);
+
+            if(company == null)
+            {
+                return false;
+            }
+
+            UpdateCompany(ref company, updatedCompany);
+
+            try
+            {
+                _context.Update(company);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
         }
 
-        public Company GetById(int id)
+        // add new contact (fixed)
+        public bool AddNewContact(int id, Contact newContact)
         {
-            return GetAll()
-                .FirstOrDefault(company => company.Id == id);
+            var company = GetById(id);
+
+            if (company == null)
+            {
+                return false;
+            }
+
+            List<Contact> contacts = company.Contacts.ToList();
+            contacts.Add(newContact);
+            company.Contacts = (IEnumerable<Contact>)contacts;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            { 
+                return false;
+            }
+            return true;
         }
 
-        public IEnumerable<Contact> GetContacts(int id)
-        {
-            return GetById(id)
-                .Contacts;
-        }
 
-        public Company GetLastInserted()
-        {
-            return _context.Companies
-                .LastOrDefault();
-        }
 
-        public Location GetLocation(int id)
+        public Location GetLocation(int companyId)
         {
-            return GetById(id)
+            return GetById(companyId)
                  .Locations
-                 .LastOrDefault();
+                    .LastOrDefault();
         }
 
         public IEnumerable<ProposalForCooperation> GetProspalForCooperations(int id)
@@ -124,37 +135,44 @@ namespace PredlaganjeSaradnjeIRC.Services
 
         public bool SetNewAddress(int id, Location location)
         {
+            var company = GetById(id);
+
+            if(company == null)
+            {
+                return false;
+            }
+
+            List<Location> address = company.Locations.ToList(); 
+            company.Locations = UpdateAddress(address, location);
+
             try
             {
-                var company = GetById(id);
-
-                company.Locations.Append(location);
-
                 _context.Update(company);
                 _context.SaveChanges();
             }
             catch (Exception)
             {
-
                 return false;
             }
             return true;
         }
-
-        public bool Update(Company company)
+        public Company GetLastInserted()
         {
-            try
-            {
-                _context.Update(company);
-                _context.SaveChanges();
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
-            return true;
+            return _context.Companies
+                .LastOrDefault();
         }
 
+        private IEnumerable<Location> UpdateAddress(List<Location> address, Location location)
+        {
+            address.Add(location);
+            return (IEnumerable<Location>)address;
+        }
+
+        private void UpdateCompany(ref Company companyForUpdate, Company updatedCompany)
+        {
+            companyForUpdate.Name = updatedCompany.Name;
+            companyForUpdate.Username = updatedCompany.Username;
+            companyForUpdate.Password = updatedCompany.Password;
+        }
     }
 }

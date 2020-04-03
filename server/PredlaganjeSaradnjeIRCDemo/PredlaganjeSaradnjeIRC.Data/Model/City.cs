@@ -13,6 +13,5 @@ namespace PredlaganjeSaradnjeIRC.Data.Model
         public string Name { get; set; }
         [Required]
         public string PostalCode { get; set; }
-        public virtual IEnumerable<Location> Locations { get; set; }
     }
 }
