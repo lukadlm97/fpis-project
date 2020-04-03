@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNet.Security.OAuth.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +36,8 @@ namespace PredlaganjeSaradnjeIRC
             services.AddSingleton(Configuration);
             services.AddScoped<ICompany, CompanyService>();
             services.AddScoped<IContact, ContactService>();
+          //  services.AddAuthentication(OAuthValidationDefaults.AuthenticationScheme)
+            //    .AddOAuthValidation();
 
             services.AddDbContext<ApplicationContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

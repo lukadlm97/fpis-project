@@ -32,7 +32,7 @@ namespace PredlaganjeSaradnjeIRC.Services
                     company.Contacts = new List<Contact>();
             }
 
-            company.Contacts.Add(newContact);
+            company.Contacts.Append(newContact);
 
             try
             {
