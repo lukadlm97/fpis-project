@@ -37,7 +37,8 @@ namespace PredlaganjeSaradnjeIRC.Services
         // crud operation (insert,update,delete) (fixed)
         public bool Add(Company newCompany)
         {
-            newCompany.Locations.FirstOrDefault().City = cityService.GetById(newCompany.Locations.FirstOrDefault().City.Id);
+            PrepareCityOfLocationForSaving(ref newCompany);
+
             try
             {
                 _context.Add(newCompany);
@@ -48,6 +49,19 @@ namespace PredlaganjeSaradnjeIRC.Services
             }
             return true;
         }
+
+        private void PrepareCityOfLocationForSaving(ref Company newCompany)
+        {
+            if (newCompany.Locations.Count() == 0)
+                return;
+
+            Location locationOfNewCompany = newCompany.Locations
+                                                        .FirstOrDefault();
+
+            locationOfNewCompany.City = cityService
+                                                .GetById(locationOfNewCompany.City.Id);
+        }
+
         public bool Delete(int id)
         {
             Company company = GetById(id);
