@@ -15,11 +15,13 @@ namespace PredlaganjeSaradnjeIRC.Controllers
     {
         private readonly ICompany companyService;
         private readonly IContact contactService;
+        private readonly ILocation locationService;
 
-        public CompanyController(ICompany companyService,IContact contactService)
+        public CompanyController(ICompany companyService,IContact contactService,ILocation locationService)
         {
             this.companyService = companyService;
             this.contactService = contactService;
+            this.locationService = locationService;
         }
 
         [HttpGet]
@@ -116,6 +118,29 @@ namespace PredlaganjeSaradnjeIRC.Controllers
                 return Ok("Kontakt je uspesno izmenjen!");
             }
             return BadRequest("Nije moguce izmeniti kontakt!");
+        }
+
+        [HttpGet("{id}/location")]
+        public async Task<ActionResult<Location>> GetLocation(int id)
+        {
+            var location = locationService.GetByCompanyId(id);
+
+            if (location == null)
+            {
+                return NotFound("Nije nadjena lokacija za kompaniju");
+            }
+
+            return Ok(location);
+        }
+
+        [HttpPost("{id}/location")]
+        public async Task<ActionResult<Location>> AddNewLocation(int id,[FromBody] Location newLocation)
+        {
+            if (locationService.Add(id, newLocation))
+            {
+                return Created("Uspesno ste dodali lokaciju za kompaniju","");
+            }
+            return BadRequest("Nije moguce uneti lokaciju za kompaniju");
         }
 
     }
