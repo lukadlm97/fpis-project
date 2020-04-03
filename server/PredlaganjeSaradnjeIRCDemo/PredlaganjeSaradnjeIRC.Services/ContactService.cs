@@ -36,7 +36,8 @@ namespace PredlaganjeSaradnjeIRC.Services
         public bool Update(int companyId, int contactId, Contact updatedContact)
         {
             var company = _context.Companies
-                .FirstOrDefault(company => company.Id == companyId);
+                                .Include(company => company.Contacts)
+                                .FirstOrDefault(company => company.Id == companyId);
 
             if(company == null)
             {
