@@ -38,7 +38,7 @@ namespace PredlaganjeSaradnjeIRC.Services
             {
                 return false;
             }
-            _context.Entry(company).State = EntityState.Modified;
+            _context.Entry(company).State = EntityState.Added;
 
             company.Contacts.Add(newContact);
            // _context.Update(company);
