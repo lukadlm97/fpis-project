@@ -14,7 +14,7 @@ namespace PredlaganjeSaradnjeIRC.Data.Service
         // CRUD operation 
         bool Add(ProposalForCooperation newProposalForCooperation);
         bool Delete(int id);
-        bool Update(ProposalForCooperation proposalForCooperation);
+        bool Update(int id,ProposalForCooperation proposalForCooperation);
 
         // bonus operation
         bool UpgradeDescription(int id, string description);

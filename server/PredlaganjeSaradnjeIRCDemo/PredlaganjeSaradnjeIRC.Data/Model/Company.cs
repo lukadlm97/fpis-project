@@ -10,9 +10,7 @@ namespace PredlaganjeSaradnjeIRC.Data.Model
         [Required]
         public int Id { get; set; }
         public IEnumerable<Location> Locations { get; set; }
-        public IEnumerable<ProposalForCooperation> ProposalForCooperations { get; set; }
         public IEnumerable<Contact> Contacts  { get; set; }
-        [Required]
         public string Name { get; set; }
         public string? Username { get; set; }
         public string? Password { get; set; }

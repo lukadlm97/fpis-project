@@ -21,13 +21,11 @@ namespace PredlaganjeSaradnjeIRC.Services
         {
             return _context.Employees;
         }
-
         public Employee GetById(int id)
         {
             return GetAll()
                 .FirstOrDefault(employee => employee.Id == id);
         }
-
         public Position PositionForEmployee(int employeeId)
         {
             var atPosition = AtPostition(employeeId);
@@ -39,7 +37,7 @@ namespace PredlaganjeSaradnjeIRC.Services
             
             return atPosition.Position;
         }
-        public AtPostion AtPostition(int employeeId)
+        private AtPostion AtPostition(int employeeId)
         {
             return _context.AtPostions
                 .Include(pos => pos.Employee)

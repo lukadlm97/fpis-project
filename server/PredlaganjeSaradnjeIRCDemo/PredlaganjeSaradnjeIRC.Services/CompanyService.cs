@@ -25,8 +25,7 @@ namespace PredlaganjeSaradnjeIRC.Services
             return _context.Companies
                 .Include(company => company.Contacts)
                 .Include(company => company.Locations)
-                    .ThenInclude(location => location.City)
-                .Include(company => company.ProposalForCooperations);
+                    .ThenInclude(location => location.City);
         }
         public Company GetById(int id)
         {
@@ -141,11 +140,6 @@ namespace PredlaganjeSaradnjeIRC.Services
                     .LastOrDefault();
         }
 
-        public IEnumerable<ProposalForCooperation> GetProspalForCooperations(int id)
-        {
-            return GetById(id)
-                .ProposalForCooperations;
-        }
 
         public bool SetNewAddress(int id, Location location)
         {

@@ -12,22 +12,16 @@ namespace PredlaganjeSaradnjeIRC.Services
     public class ProspalForCooperationService:IProspalForCooperation
     {
         private readonly ApplicationContext _context;
-
+        private readonly ICompany companyService;
+        private readonly IEmployee employeeService;
         public ProspalForCooperationService(ApplicationContext context)
         {
             _context = context;
+            companyService = new CompanyService(context);
+            employeeService = new EmployeeService(context);
         }
-
-        public bool Add(ProposalForCooperation newProposalForCooperation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
+        
+        //main info about prospal
         public IEnumerable<ProposalForCooperation> GetAll()
         {
             return _context.ProposalForCooperations
@@ -37,21 +31,149 @@ namespace PredlaganjeSaradnjeIRC.Services
                     .ThenInclude(company => company.Locations)
                 .Include(proposal => proposal.Employee);
         }
-
         public ProposalForCooperation GetById(int id)
         {
             return GetAll().
                 FirstOrDefault(proposal => proposal.Id == id);
         }
 
-        public bool Update(ProposalForCooperation proposalForCooperation)
+        //CRUD operation
+        public bool Add(ProposalForCooperation newProposalForCooperation)
         {
-            throw new NotImplementedException();
-        }
+            if(newProposalForCooperation == null)
+            {
+                return false;
+            }
 
+            var company = companyService
+                .GetById(newProposalForCooperation.Company.Id);
+
+            var employee = employeeService
+                .GetById(newProposalForCooperation.Employee.Id);
+
+            if(company == null || employee == null)
+            {
+                return false;
+            }
+
+            SetProposalsObjects(ref newProposalForCooperation, company, employee);
+
+            try
+            {
+                _context.Add(newProposalForCooperation);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public bool Delete(int id)
+        {
+            var prospalForCooperation = GetById(id);
+
+            if(prospalForCooperation == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                _context.Remove(prospalForCooperation);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public bool Update(int id,ProposalForCooperation proposalForCooperation)
+        {
+            var proposal = GetById(id);
+
+            if(proposal == null)
+            {
+                return false;
+            }
+
+            if (!CheckObjectsForUpdate(proposalForCooperation))
+            {
+                return false;
+            }
+
+            SetProposalsAttributes(ref proposal, proposalForCooperation);
+
+            try
+            {
+                _context.Update(proposal);
+                _context.SaveChanges();
+            }catch(Exception e)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        
+        //bonus 
         public bool UpgradeDescription(int id, string description)
         {
-            throw new NotImplementedException();
+            var proposal = GetById(id);
+
+            if(proposal == null)
+            {
+                return false;
+            }
+
+            proposal.DescriptionOfProposal += description;
+            proposal.Date = new DateTime();
+
+            try
+            {
+                _context.Update(proposal);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        // heleper methods
+        private void SetProposalsObjects(ref ProposalForCooperation newProposalForCooperation, Company company, Employee employee)
+        {
+            newProposalForCooperation.Company = company;
+            newProposalForCooperation.Employee = employee;
+            newProposalForCooperation.Date = DateTime.Now;
+        }
+        private bool CheckObjectsForUpdate(ProposalForCooperation proposalForCooperation)
+        {
+            var company = companyService
+               .GetById(proposalForCooperation.Company.Id);
+
+            var employee = employeeService
+                .GetById(proposalForCooperation.Employee.Id);
+
+            if (company == null || employee == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        private void SetProposalsAttributes(ref ProposalForCooperation proposal, ProposalForCooperation proposalForCooperation)
+        {
+            SetProposalsObjects(ref proposal, proposalForCooperation.Company, proposalForCooperation.Employee);
+            proposal.Title = proposalForCooperation.Title;
+            proposal.DescriptionOfProposal = proposalForCooperation.DescriptionOfProposal;
+            proposal.Date = DateTime.Now;
         }
     }
 }

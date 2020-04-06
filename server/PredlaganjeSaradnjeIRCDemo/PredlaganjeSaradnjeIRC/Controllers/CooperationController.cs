@@ -34,6 +34,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
 
             return Ok(prospals);
         }
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<ProposalForCooperation>> GetCooperationById(int id)
         {
@@ -45,6 +46,46 @@ namespace PredlaganjeSaradnjeIRC.Controllers
             }
 
             return Ok(prospal);
+        }
+    
+        [HttpPost]
+        public async Task<ActionResult<ProposalForCooperation>> AddNewCooperation([FromBody] ProposalForCooperation newProposal)
+        {
+            if (_cooperationService.Add(newProposal))
+            {
+                return Created("Predlog za saradnju uspesno kreiran", "Predlog za saradnju uspesno kreiran");
+            }
+            return Forbid("Nije moguce kreirati novi predlog za saradnju.");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ProposalForCooperation>> UpdateProposal(int id,[FromBody] ProposalForCooperation proposalForUpdate)
+        {
+            if (_cooperationService.Update(id, proposalForUpdate))
+            {
+                return Ok("Predlog je uspesno izmenjen");
+            }
+            return Forbid("Predlog nije moguce izmeniti");
+        }
+    
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ProposalForCooperation>> DeleteProposal(int id)
+        {
+            if (_cooperationService.Delete(id))
+            {
+                return Ok("Predog je uspesno obrisan.");
+            }
+            return BadRequest("Nije moguce obrisati predlog.");
+        }
+
+        [HttpPost("{id}/appendRequest")]
+        public async Task<ActionResult<ProposalForCooperation>> AppendDescription(int id,[FromBody]string description)
+        {
+            if (_cooperationService.UpgradeDescription(id, description))
+            {
+                return Ok("Predlog je dopunjen!");
+            }
+            return BadRequest("Predlog nije moguce dopuniti!");
         }
     }
 }
