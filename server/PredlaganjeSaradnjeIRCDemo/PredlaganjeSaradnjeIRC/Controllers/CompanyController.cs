@@ -78,7 +78,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         }
         
         [HttpGet("{id}/contact")]
-        public async Task<ActionResult<Contact>> GetContactsByCompany(int id)
+        public async Task<ActionResult<Contact>> GetContactsForCompany(int id)
         {
             var contacts = contactService.GetAll(id);
 
@@ -121,7 +121,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         }
 
         [HttpGet("{id}/location")]
-        public async Task<ActionResult<Location>> GetLocation(int id)
+        public async Task<ActionResult<Location>> GetLocationForCompany(int id)
         {
             var location = locationService.GetByCompanyId(id);
 

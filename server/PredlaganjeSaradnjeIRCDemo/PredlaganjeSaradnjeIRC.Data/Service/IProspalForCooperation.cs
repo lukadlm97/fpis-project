@@ -12,11 +12,11 @@ namespace PredlaganjeSaradnjeIRC.Data.Service
         IEnumerable<ProposalForCooperation> GetAll();
 
         // CRUD operation 
-        void Add(ProposalForCooperation newProposalForCooperation);
-        void Delete(int id);
-        void Update(ProposalForCooperation proposalForCooperation);
+        bool Add(ProposalForCooperation newProposalForCooperation);
+        bool Delete(int id);
+        bool Update(ProposalForCooperation proposalForCooperation);
 
         // bonus operation
-        void UpgradeDescription(int id, string description);
+        bool UpgradeDescription(int id, string description);
     }
 }

@@ -15,6 +15,5 @@ namespace PredlaganjeSaradnjeIRC.Data.Model
         public string LastName { get; set; }
         public string? PersonalNumber { get; set; }
         public int? Experience { get; set; }
-        public IEnumerable<ProposalForCooperation> ProposalForCooperations { get; set; }
     }
 }
