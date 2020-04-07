@@ -14,11 +14,14 @@ namespace PredlaganjeSaradnjeIRC.Services
         private readonly ApplicationContext _context;
         private readonly ICompany companyService;
         private readonly IEmployee employeeService;
+        private readonly IContact contactService;
+
         public ProspalForCooperationService(ApplicationContext context)
         {
             _context = context;
             companyService = new CompanyService(context);
             employeeService = new EmployeeService(context);
+            contactService = new ContactService(context);
         }
         
         //main info about prospal
@@ -29,6 +32,7 @@ namespace PredlaganjeSaradnjeIRC.Services
                     .ThenInclude(company => company.Contacts)
                 .Include(proposal => proposal.Company)
                     .ThenInclude(company => company.Locations)
+                        .ThenInclude(location =>location.City)
                 .Include(proposal => proposal.Employee);
         }
         public ProposalForCooperation GetById(int id)
@@ -47,6 +51,7 @@ namespace PredlaganjeSaradnjeIRC.Services
 
             var company = companyService
                 .GetById(newProposalForCooperation.Company.Id);
+
 
             var employee = employeeService
                 .GetById(newProposalForCooperation.Employee.Id);
@@ -107,8 +112,11 @@ namespace PredlaganjeSaradnjeIRC.Services
 
             SetProposalsAttributes(ref proposal, proposalForCooperation);
 
+            proposal.Company.Contacts = contactService.GetAll(proposal.Company.Id);
+
             try
             {
+                //_context.Entry(proposal).State = EntityState.Detached;
                 _context.Update(proposal);
                 _context.SaveChanges();
             }catch(Exception e)
@@ -149,6 +157,17 @@ namespace PredlaganjeSaradnjeIRC.Services
         // heleper methods
         private void SetProposalsObjects(ref ProposalForCooperation newProposalForCooperation, Company company, Employee employee)
         {
+            foreach(Location location in newProposalForCooperation.Company.Locations)
+            {
+                foreach(Location citiesLocations in company.Locations)
+                {
+                    if(citiesLocations.Id == location.Id)
+                    {
+                        citiesLocations.City = location.City;
+                    }
+                }
+            }
+
             newProposalForCooperation.Company = company;
             newProposalForCooperation.Employee = employee;
             newProposalForCooperation.Date = DateTime.Now;
@@ -158,8 +177,13 @@ namespace PredlaganjeSaradnjeIRC.Services
             var company = companyService
                .GetById(proposalForCooperation.Company.Id);
 
+            _context.Entry(company).State = EntityState.Detached;
+
+
             var employee = employeeService
                 .GetById(proposalForCooperation.Employee.Id);
+
+            _context.Entry(employee).State = EntityState.Detached;
 
             if (company == null || employee == null)
             {
