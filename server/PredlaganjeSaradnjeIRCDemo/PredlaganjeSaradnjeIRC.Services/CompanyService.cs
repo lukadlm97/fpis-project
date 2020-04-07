@@ -48,19 +48,6 @@ namespace PredlaganjeSaradnjeIRC.Services
             }
             return true;
         }
-
-        private void PrepareCityOfLocationForSaving(ref Company newCompany)
-        {
-            if (newCompany.Locations.Count() == 0)
-                return;
-
-            Location locationOfNewCompany = newCompany.Locations
-                                                        .FirstOrDefault();
-
-            locationOfNewCompany.City = cityService
-                                                .GetById(locationOfNewCompany.City.Id);
-        }
-
         public bool Delete(int id)
         {
             Company company = GetById(id);
@@ -132,15 +119,24 @@ namespace PredlaganjeSaradnjeIRC.Services
         }
 
 
+        //helper method
+        private void PrepareCityOfLocationForSaving(ref Company newCompany)
+        {
+            if (newCompany.Locations.Count() == 0)
+                return;
 
+            Location locationOfNewCompany = newCompany.Locations
+                                                        .FirstOrDefault();
+
+            locationOfNewCompany.City = cityService
+                                                .GetById(locationOfNewCompany.City.Id);
+        }
         public Location GetLocation(int companyId)
         {
             return GetById(companyId)
                  .Locations
                     .LastOrDefault();
         }
-
-
         public bool SetNewAddress(int id, Location location)
         {
             var company = GetById(id);
@@ -169,13 +165,11 @@ namespace PredlaganjeSaradnjeIRC.Services
             return _context.Companies
                 .LastOrDefault();
         }
-
         private IEnumerable<Location> UpdateAddress(List<Location> address, Location location)
         {
             address.Add(location);
             return (IEnumerable<Location>)address;
         }
-
         private void UpdateCompany(ref Company companyForUpdate, Company updatedCompany)
         {
             companyForUpdate.Name = updatedCompany.Name;

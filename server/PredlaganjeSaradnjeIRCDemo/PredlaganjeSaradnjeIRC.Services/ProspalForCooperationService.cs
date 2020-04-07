@@ -110,7 +110,7 @@ namespace PredlaganjeSaradnjeIRC.Services
                 return false;
             }
 
-            SetProposalsAttributes(ref proposal, proposalForCooperation);
+            SetProposalsAttributesUpdate(ref proposal, proposalForCooperation);
 
             proposal.Company.Contacts = contactService.GetAll(proposal.Company.Id);
 
@@ -155,11 +155,31 @@ namespace PredlaganjeSaradnjeIRC.Services
 
 
         // heleper methods
-        private void SetProposalsObjects(ref ProposalForCooperation newProposalForCooperation, Company company, Employee employee)
+        private void SetProposalsObjectsUpdate(ref ProposalForCooperation newProposalForCooperation, Company company, Employee employee)
         {
+            Company tempCompany = new Company();
+            Employee tempEmployee = new Employee();
+
+            if(company.Locations == null)
+            {
+                tempCompany = companyService.GetById(company.Id);
+            }
+            else
+            {
+                tempCompany = company;
+            }
+            if(string.IsNullOrEmpty(employee.FirstName))
+            {
+                tempEmployee = employeeService.GetById(employee.Id);
+            }
+            else
+            {
+                tempEmployee = employee;
+            }
+
             foreach(Location location in newProposalForCooperation.Company.Locations)
             {
-                foreach(Location citiesLocations in company.Locations)
+                foreach(Location citiesLocations in tempCompany.Locations)
                 {
                     if(citiesLocations.Id == location.Id)
                     {
@@ -168,8 +188,8 @@ namespace PredlaganjeSaradnjeIRC.Services
                 }
             }
 
-            newProposalForCooperation.Company = company;
-            newProposalForCooperation.Employee = employee;
+            newProposalForCooperation.Company = tempCompany;
+            newProposalForCooperation.Employee = tempEmployee;
             newProposalForCooperation.Date = DateTime.Now;
         }
         private bool CheckObjectsForUpdate(ProposalForCooperation proposalForCooperation)
@@ -192,12 +212,21 @@ namespace PredlaganjeSaradnjeIRC.Services
 
             return true;
         }
-        private void SetProposalsAttributes(ref ProposalForCooperation proposal, ProposalForCooperation proposalForCooperation)
+
+        private void SetProposalsObjects(ref ProposalForCooperation proposal, Company company, Employee employee)
         {
-            SetProposalsObjects(ref proposal, proposalForCooperation.Company, proposalForCooperation.Employee);
+            proposal.Company = company;
+            proposal.Employee = employee;
+            proposal.Date = DateTime.Now;
+        }
+
+        private void SetProposalsAttributesUpdate(ref ProposalForCooperation proposal, ProposalForCooperation proposalForCooperation)
+        {
+            SetProposalsObjectsUpdate(ref proposal, proposalForCooperation.Company, proposalForCooperation.Employee);
             proposal.Title = proposalForCooperation.Title;
             proposal.DescriptionOfProposal = proposalForCooperation.DescriptionOfProposal;
             proposal.Date = DateTime.Now;
         }
+
     }
 }

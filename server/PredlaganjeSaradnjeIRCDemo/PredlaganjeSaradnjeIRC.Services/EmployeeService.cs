@@ -17,6 +17,8 @@ namespace PredlaganjeSaradnjeIRC.Services
         {
             _context = context;
         }
+        
+        //main info about employee
         public IEnumerable<Employee> GetAll()
         {
             return _context.Employees;
@@ -26,6 +28,8 @@ namespace PredlaganjeSaradnjeIRC.Services
             return GetAll()
                 .FirstOrDefault(employee => employee.Id == id);
         }
+        
+        //bonus functionality
         public Position PositionForEmployee(int employeeId)
         {
             var atPosition = AtPostition(employeeId);
