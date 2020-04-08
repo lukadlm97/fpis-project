@@ -8,7 +8,8 @@ import {Switch,Route,Redirect,Link} from 'react-router-dom'
 import Container from '@material-ui/core/Container';
 import BusinessIcon from '@material-ui/icons/Business';
 import DescriptionIcon from '@material-ui/icons/Description';
-
+import CreateIcon from '@material-ui/icons/Create';
+import Box from '@material-ui/core/Box'
 
 import Home from '../home'
 import Company from '../company'
@@ -26,8 +27,13 @@ const NavBar:React.FC = () =>{
         <>
         <div className={classes.root}>
             <AppBar style={{background : '#727bb8'}} position="static" >
-          
                 <div>
+                    <Box justifyContent="center"
+                        display="flex"
+                        alignItems="center"
+                        css={{ height: 60 }}
+                        p={0.7}
+                        m={0.7}>
                     <Button component={Link} to="/">
                         <HomeIcon color="action" 
                         style={{ fontSize: 40,color:"#161824" }}/> 
@@ -43,6 +49,7 @@ const NavBar:React.FC = () =>{
                         style={{fontSize:40,color:"#161824"}}/>
                         Zahtevi
                     </Button>
+                    </Box>
                 </div>
             </AppBar>
             <div>
