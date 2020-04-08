@@ -31,17 +31,17 @@ const NavBar:React.FC = () =>{
                     <Button component={Link} to="/">
                         <HomeIcon color="action" 
                         style={{ fontSize: 40,color:"#161824" }}/> 
-                        Home
+                        Pocetna
                         </Button>
                     <Button component={Link} to="/company">
                         <BusinessIcon color="action"
                         style={{fontSize:40,color:"#161824"}}/>
-                        Company
+                        Kompanije
                     </Button>
                     <Button component={Link} to="/request">
                         <DescriptionIcon color="action"
                         style={{fontSize:40,color:"#161824"}}/>
-                        Requests
+                        Zahtevi
                     </Button>
                 </div>
             </AppBar>
