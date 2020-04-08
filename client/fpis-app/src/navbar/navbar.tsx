@@ -31,13 +31,14 @@ const NavBar:React.FC = () =>{
         <div className={classes.root}>
             <AppBar style={{background : '#727bb8'}} position="static" >
                 <div>
-                    <Box justifyContent="center"
+                    <Box justifyContent="left"
                         display="flex"
                         alignItems="center"
                         css={{ height: 60 }}
                         p={0.7}
                         m={0.7}
-                        mx="auto">
+                        mx="auto"
+                        >
                     <Button component={Link} to="/">
                         <HomeIcon color="action" 
                         style={{ fontSize: 40,color:"#161824" }}/> 
