@@ -10,6 +10,9 @@ import BusinessIcon from '@material-ui/icons/Business';
 import DescriptionIcon from '@material-ui/icons/Description';
 import CreateIcon from '@material-ui/icons/Create';
 import Box from '@material-ui/core/Box'
+import ContactMailIcon from '@material-ui/icons/ContactMail';
+
+
 
 import Home from '../home'
 import Company from '../company'
@@ -33,7 +36,8 @@ const NavBar:React.FC = () =>{
                         alignItems="center"
                         css={{ height: 60 }}
                         p={0.7}
-                        m={0.7}>
+                        m={0.7}
+                        mx="auto">
                     <Button component={Link} to="/">
                         <HomeIcon color="action" 
                         style={{ fontSize: 40,color:"#161824" }}/> 
@@ -48,6 +52,11 @@ const NavBar:React.FC = () =>{
                         <DescriptionIcon color="action"
                         style={{fontSize:40,color:"#161824"}}/>
                         Zahtevi
+                    </Button>
+                    <Button>
+                        <ContactMailIcon color="action"
+                        style={{fontSize:40,color:"#161824"}}/>
+                        Kontakti
                     </Button>
                     </Box>
                 </div>
