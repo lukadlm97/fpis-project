@@ -32,6 +32,11 @@ namespace PredlaganjeSaradnjeIRC.Services
             return company.Contacts;
         }
       
+        public IEnumerable<Contact> GetAll()
+        {
+            return _context.Contacts;
+        }
+
         // TODO: test update and delete for contacts
         public bool Update(int companyId, int contactId, Contact updatedContact)
         {

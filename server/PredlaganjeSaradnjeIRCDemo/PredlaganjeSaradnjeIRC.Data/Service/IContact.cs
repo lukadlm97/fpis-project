@@ -9,6 +9,7 @@ namespace PredlaganjeSaradnjeIRC.Data.Service
     {
         Contact GetById(int companyId,int contactId);
         IEnumerable<Contact> GetAll(int companyId);
+        IEnumerable<Contact> GetAll();
 
         bool Update(int companyId, int contactId, Contact updatedContact);
         bool Delete(int id, int contactId);

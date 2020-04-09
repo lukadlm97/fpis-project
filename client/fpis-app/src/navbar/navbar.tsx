@@ -19,6 +19,7 @@ import Company from '../company'
 import Request from '../request'
 import useStyles from '../style'
 import HomeIcon from './homeicon'
+import Contact from '../contact'
 
 const NavBar:React.FC = () =>{
 
@@ -54,7 +55,7 @@ const NavBar:React.FC = () =>{
                         style={{fontSize:40,color:"#161824"}}/>
                         Zahtevi
                     </Button>
-                    <Button>
+                    <Button component={Link} to="/contacts">
                         <ContactMailIcon color="action"
                         style={{fontSize:40,color:"#161824"}}/>
                         Kontakti
@@ -68,6 +69,7 @@ const NavBar:React.FC = () =>{
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/company" component={Company} />
                         <Route exact path="/request" component={Request} />
+                        <Route exact path="/contact" component={Contact}/>
                         <Redirect to="/"/>
                     </Switch>
                 </Container>

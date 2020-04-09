@@ -77,6 +77,19 @@ namespace PredlaganjeSaradnjeIRC.Controllers
             return BadRequest("Kompaniju nije moguce obrisati!");
         }
         
+        [HttpGet("contacts")]
+        public async Task<ActionResult<Contact>> GetAllContacts()
+        {
+            var contacts = contactService.GetAll();
+
+            if(contacts == null)
+            {
+                return NotFound("Nije moguce vratiti kontakte!");
+            }
+
+            return Ok(contacts);
+        }
+
         [HttpGet("{id}/contact")]
         public async Task<ActionResult<Contact>> GetContactsForCompany(int id)
         {
