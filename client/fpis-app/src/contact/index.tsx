@@ -10,7 +10,7 @@ function Contact(props:Props){
     return(
         <>
             <h1>Stranica za kontakte</h1>
-    {props.contacts.map(cont => <h6>{cont.id}</h6>)}
+            {props.contacts.map(cont => <h6>{cont.id}</h6>)}
         </>
     );
 }
