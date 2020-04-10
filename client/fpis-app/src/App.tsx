@@ -106,14 +106,12 @@ function App() {
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/company" component={() => <Company companies={companies}/>} />
                         <Route exact path="/request" component={Request} />
-                        <Route exact path="/contact" component={Contact}/>
+                        <Route exact path="/contact" component={()=> <Contact contacts={contacts} />}/>
                         <Redirect to="/"/>
                     </Switch>
                 </Container>
             </div>
         </div>
-      <Contact contacts={contacts} /> 
-      <Company companies={companies} />
       <Request />
     </Router>
    </>
