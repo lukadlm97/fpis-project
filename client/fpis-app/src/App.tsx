@@ -101,7 +101,7 @@ function App() {
                 </div>
             </AppBar>
             <div>
-                <Container maxWidth="sm">
+                <Container maxWidth="md">
                     <Switch>
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/company" component={() => <Company companies={companies}/>} />
@@ -112,7 +112,6 @@ function App() {
                 </Container>
             </div>
         </div>
-      <Request />
     </Router>
    </>
   );

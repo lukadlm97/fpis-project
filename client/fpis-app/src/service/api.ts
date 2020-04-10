@@ -2,10 +2,10 @@ import {Contact} from '../model/Contact'
 import {ContactResponse} from '../model/ContactResponse'
 import axios from 'axios'
 
-const baseUrl = "https://localhost:44360/api/company"
+const baseUrl = "https://localhost:44360/api"
 
 export async function getAllContacts(){
-   let res = await fetch(baseUrl+'/contacts')
+   let res = await fetch(baseUrl+'/company/contacts')
     let contacts = await res.json();
     var dataStr = JSON.stringify(contacts)
 
@@ -20,7 +20,7 @@ export async function getAllContacts(){
 }
 
 export async function getAllCompanies(){
-    let res = await fetch("https://localhost:44360/api/company")
+    let res = await fetch(baseUrl+"/company")
     let companies = await res.json()
     var datStr = JSON.stringify(companies)
     console.log(datStr)
