@@ -18,3 +18,16 @@ export async function getAllContacts(){
     
     return contacts.map((contact:any)=>({...contact}));
 }
+
+export async function getAllCompanies(){
+    let res = await fetch("https://localhost:44360/api/company")
+    let companies = await res.json()
+    var datStr = JSON.stringify(companies)
+    console.log(datStr)
+    try{
+        companies = JSON.parse(datStr)
+    }catch(e){
+        console.log(e)
+    }
+    return companies.map((company:any)=>({...company}))
+}
