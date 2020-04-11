@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PredlaganjeSaradnjeIRC.Data.Model
 {
-    public class ProposalForCooperation
+    public class RequestForCooperation
     {
         [Required]
         public int Id { get; set; }

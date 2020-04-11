@@ -41,7 +41,7 @@ namespace PredlaganjeSaradnjeIRC.Services
             
             return atPosition.Position;
         }
-        private AtPostion AtPostition(int employeeId)
+        private AtPosition AtPostition(int employeeId)
         {
             return _context.AtPostions
                 .Include(pos => pos.Employee)

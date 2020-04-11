@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PredlaganjeSaradnjeIRC.Data.Model
 {
-    public class AtPostion
+    public class AtPosition
     {
         public int Id { get; set; }
         public Employee Employee { get; set; }

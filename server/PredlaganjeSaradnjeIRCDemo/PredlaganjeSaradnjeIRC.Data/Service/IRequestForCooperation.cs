@@ -5,16 +5,16 @@ using System.Text;
 
 namespace PredlaganjeSaradnjeIRC.Data.Service
 {
-    public interface IProspalForCooperation
+    public interface IRequestForCooperation
     {
         // main info about Propspal
-        ProposalForCooperation GetById(int id);
-        IEnumerable<ProposalForCooperation> GetAll();
+        RequestForCooperation GetById(int id);
+        IEnumerable<RequestForCooperation> GetAll();
 
         // CRUD operation 
-        bool Add(ProposalForCooperation newProposalForCooperation);
+        bool Add(RequestForCooperation newProposalForCooperation);
         bool Delete(int id);
-        bool Update(int id,ProposalForCooperation proposalForCooperation);
+        bool Update(int id,RequestForCooperation proposalForCooperation);
 
         // bonus operation
         bool UpgradeDescription(int id, string description);

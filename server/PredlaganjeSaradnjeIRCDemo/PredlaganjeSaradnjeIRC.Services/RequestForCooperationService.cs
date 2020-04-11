@@ -9,14 +9,14 @@ using System.Text;
 
 namespace PredlaganjeSaradnjeIRC.Services
 {
-    public class ProspalForCooperationService:IProspalForCooperation
+    public class RequestForCooperationService:IRequestForCooperation
     {
         private readonly ApplicationContext _context;
         private readonly ICompany companyService;
         private readonly IEmployee employeeService;
         private readonly IContact contactService;
 
-        public ProspalForCooperationService(ApplicationContext context)
+        public RequestForCooperationService(ApplicationContext context)
         {
             _context = context;
             companyService = new CompanyService(context);
@@ -25,7 +25,7 @@ namespace PredlaganjeSaradnjeIRC.Services
         }
         
         //main info about prospal
-        public IEnumerable<ProposalForCooperation> GetAll()
+        public IEnumerable<RequestForCooperation> GetAll()
         {
             return _context.ProposalForCooperations
                 .Include(proposal => proposal.Company)
@@ -35,14 +35,14 @@ namespace PredlaganjeSaradnjeIRC.Services
                         .ThenInclude(location =>location.City)
                 .Include(proposal => proposal.Employee);
         }
-        public ProposalForCooperation GetById(int id)
+        public RequestForCooperation GetById(int id)
         {
             return GetAll().
                 FirstOrDefault(proposal => proposal.Id == id);
         }
 
         //CRUD operation
-        public bool Add(ProposalForCooperation newProposalForCooperation)
+        public bool Add(RequestForCooperation newProposalForCooperation)
         {
             if(newProposalForCooperation == null)
             {
@@ -96,7 +96,7 @@ namespace PredlaganjeSaradnjeIRC.Services
 
             return true;
         }
-        public bool Update(int id,ProposalForCooperation proposalForCooperation)
+        public bool Update(int id,RequestForCooperation proposalForCooperation)
         {
             var proposal = GetById(id);
 
@@ -155,7 +155,7 @@ namespace PredlaganjeSaradnjeIRC.Services
 
 
         // heleper methods
-        private void SetProposalsObjectsUpdate(ref ProposalForCooperation newProposalForCooperation, Company company, Employee employee)
+        private void SetProposalsObjectsUpdate(ref RequestForCooperation newProposalForCooperation, Company company, Employee employee)
         {
             Company tempCompany = new Company();
             Employee tempEmployee = new Employee();
@@ -192,7 +192,7 @@ namespace PredlaganjeSaradnjeIRC.Services
             newProposalForCooperation.Employee = tempEmployee;
             newProposalForCooperation.Date = DateTime.Now;
         }
-        private bool CheckObjectsForUpdate(ProposalForCooperation proposalForCooperation)
+        private bool CheckObjectsForUpdate(RequestForCooperation proposalForCooperation)
         {
             var company = companyService
                .GetById(proposalForCooperation.Company.Id);
@@ -213,14 +213,14 @@ namespace PredlaganjeSaradnjeIRC.Services
             return true;
         }
 
-        private void SetProposalsObjects(ref ProposalForCooperation proposal, Company company, Employee employee)
+        private void SetProposalsObjects(ref RequestForCooperation proposal, Company company, Employee employee)
         {
             proposal.Company = company;
             proposal.Employee = employee;
             proposal.Date = DateTime.Now;
         }
 
-        private void SetProposalsAttributesUpdate(ref ProposalForCooperation proposal, ProposalForCooperation proposalForCooperation)
+        private void SetProposalsAttributesUpdate(ref RequestForCooperation proposal, RequestForCooperation proposalForCooperation)
         {
             SetProposalsObjectsUpdate(ref proposal, proposalForCooperation.Company, proposalForCooperation.Employee);
             proposal.Title = proposalForCooperation.Title;

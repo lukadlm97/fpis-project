@@ -49,10 +49,10 @@ const useStyles = makeStyles({
 })
 
 
+const classes = useStyles();
+const [page,setPage] = React.useState(0);
+const [rowsPerAge,setRowsPerPage] = useState(10);
 function companyTable(props:Props){
-    const classes = useStyles();
-    const [page,setPage] = React.useState(0);
-    const [rowsPerAge,setRowsPerPage] = useState(10);
 
     const handleChangePage = (event:unknown,newPage:number)=>{
         setPage(newPage)

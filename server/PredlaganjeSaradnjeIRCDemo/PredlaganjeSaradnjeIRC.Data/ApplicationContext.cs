@@ -14,10 +14,10 @@ namespace PredlaganjeSaradnjeIRC.Data
         {
         }
 
-        public DbSet<ProposalForCooperation> ProposalForCooperations { get; set; }
+        public DbSet<RequestForCooperation> ProposalForCooperations { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Position> Positions { get; set; }
-        public DbSet<AtPostion> AtPostions { get; set; }
+        public DbSet<AtPosition> AtPostions { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<City> Cities { get; set; }

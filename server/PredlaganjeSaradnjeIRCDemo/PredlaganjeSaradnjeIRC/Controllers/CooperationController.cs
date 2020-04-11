@@ -14,15 +14,15 @@ namespace PredlaganjeSaradnjeIRC.Controllers
     [ApiController]
     public class CooperationController : ControllerBase
     {
-        private readonly IProspalForCooperation _cooperationService;
+        private readonly IRequestForCooperation _cooperationService;
 
-        public CooperationController(IProspalForCooperation cooperationService)
+        public CooperationController(IRequestForCooperation cooperationService)
         {
             _cooperationService = cooperationService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<ProposalForCooperation>>  GetAllCooperations()
+        public async Task<ActionResult<RequestForCooperation>>  GetAllCooperations()
         {
             var prospals = _cooperationService
                                 .GetAll();
@@ -36,7 +36,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         }
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProposalForCooperation>> GetCooperationById(int id)
+        public async Task<ActionResult<RequestForCooperation>> GetCooperationById(int id)
         {
             var prospal = _cooperationService.GetById(id);
 
@@ -49,7 +49,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         }
     
         [HttpPost]
-        public async Task<ActionResult<ProposalForCooperation>> AddNewCooperation([FromBody] ProposalForCooperation newProposal)
+        public async Task<ActionResult<RequestForCooperation>> AddNewCooperation([FromBody] RequestForCooperation newProposal)
         {
             if (_cooperationService.Add(newProposal))
             {
@@ -59,7 +59,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ProposalForCooperation>> UpdateProposal(int id,[FromBody] ProposalForCooperation proposalForUpdate)
+        public async Task<ActionResult<RequestForCooperation>> UpdateProposal(int id,[FromBody] RequestForCooperation proposalForUpdate)
         {
             if (_cooperationService.Update(id, proposalForUpdate))
             {
@@ -69,7 +69,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         }
     
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ProposalForCooperation>> DeleteProposal(int id)
+        public async Task<ActionResult<RequestForCooperation>> DeleteProposal(int id)
         {
             if (_cooperationService.Delete(id))
             {
@@ -79,7 +79,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         }
 
         [HttpPost("{id}/appendRequest")]
-        public async Task<ActionResult<ProposalForCooperation>> AppendDescription(int id,[FromBody]string description)
+        public async Task<ActionResult<RequestForCooperation>> AppendDescription(int id,[FromBody]string description)
         {
             if (_cooperationService.UpgradeDescription(id, description))
             {

@@ -48,7 +48,7 @@ namespace PredlaganjeSaradnjeIRC
             services.AddScoped<ICompany, CompanyService>();
             services.AddScoped<IContact, ContactService>();
             services.AddScoped<ILocation, LocationService>();
-            services.AddScoped<IProspalForCooperation, ProspalForCooperationService>();
+            services.AddScoped<IRequestForCooperation, RequestForCooperationService>();
           //  services.AddAuthentication(OAuthValidationDefaults.AuthenticationScheme)
             //    .AddOAuthValidation();
 
