@@ -4,11 +4,13 @@ import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import NavBar from './navbar/navbar'
 import { Contact as ContactModel } from './model/Contact';
-import {getAllContacts,getAllCompanies} from './service/api'
+import {getAllContacts,getAllCompanies,getAllRequests} from './service/api'
 import { promises } from 'dns';
 import Contact from './contact/index'
 import {Company as CompanyModel } from './model/Company';
 import Company from './company/index'
+import {RequestForCooperation as RequestForCooperationModel} from './model/RequestForCooperation'
+import Request from './request/index'
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -25,12 +27,13 @@ import ContactMailIcon from '@material-ui/icons/ContactMail';
 import HomeIcon from './navbar/homeicon'
 import useStyles from './navbar/style'
 import Home from './home/index'
-import Request from './request/index'
+
 
 
 interface State{
   contacts:ContactModel[]
   companies:CompanyModel[]
+  requests:RequestForCooperationModel[]
 }
 
 
@@ -38,6 +41,7 @@ function App() {
 
   let [contacts,setContacts] = useState<ContactModel[]>([])
   let [companies,setCompanies] = useState<CompanyModel[]>([])
+  let [requests,setRequests] = useState<RequestForCooperationModel[]>([])
 
   const getContacts = async()=>{
     try{
@@ -55,10 +59,21 @@ function App() {
     }
   }
 
+  const getRequests = async()=>{
+    try{
+      setRequests(await getAllRequests())
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+
+
   useEffect(()=>{
     (async function(){
       await getContacts();
       await getCompanies();
+      await getRequests();
     })();
   },[])
 
@@ -105,7 +120,7 @@ function App() {
                     <Switch>
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/company" component={() => <Company companies={companies}/>} />
-                        <Route exact path="/request" component={Request} />
+                        <Route exact path="/request" component={() => <Request requests={requests} />} />
                         <Route exact path="/contact" component={()=> <Contact contacts={contacts} />}/>
                         <Redirect to="/"/>
                     </Switch>

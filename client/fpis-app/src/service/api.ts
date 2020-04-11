@@ -31,3 +31,15 @@ export async function getAllCompanies(){
     }
     return companies.map((company:any)=>({...company}))
 }
+
+export async function getAllRequests(){
+    let res = await fetch(baseUrl+'/cooperation')
+    let cooperations = await res.json()
+    var dataStr = JSON.stringify(cooperations)
+    try{
+        cooperations = JSON.parse(dataStr)
+    }catch(e){
+        console.log(e)
+    }
+    return cooperations.map((cooperation:any)=>({...cooperation}))
+}
