@@ -16,12 +16,14 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         private readonly ICompany companyService;
         private readonly IContact contactService;
         private readonly ILocation locationService;
+        private readonly ICity cityService;
 
-        public CompanyController(ICompany companyService,IContact contactService,ILocation locationService)
+        public CompanyController(ICompany companyService,IContact contactService,ILocation locationService,ICity cityService)
         {
             this.companyService = companyService;
             this.contactService = contactService;
             this.locationService = locationService;
+            this.cityService = cityService;
         }
 
         [HttpGet]
@@ -154,6 +156,19 @@ namespace PredlaganjeSaradnjeIRC.Controllers
                 return Created("Uspesno ste dodali lokaciju za kompaniju","");
             }
             return BadRequest("Nije moguce uneti lokaciju za kompaniju");
+        }
+
+        [HttpGet("cities")]
+        public async Task<ActionResult<City>> GetAllCities()
+        {
+            var cities = cityService.GetAll();
+
+            if(cities == null)
+            {
+                return BadRequest("Nije moguce ucitati gradove");
+            }
+
+            return Ok(cities);
         }
 
     }

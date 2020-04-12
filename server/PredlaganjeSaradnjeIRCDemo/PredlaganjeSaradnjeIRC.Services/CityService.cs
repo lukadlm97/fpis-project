@@ -8,7 +8,7 @@ using System.Text;
 
 namespace PredlaganjeSaradnjeIRC.Services
 {
-    class CityService : ICity
+    public class CityService : ICity
     {
         private readonly ApplicationContext _context;
         public CityService(ApplicationContext context)
@@ -16,9 +16,14 @@ namespace PredlaganjeSaradnjeIRC.Services
             _context = context;
         }
 
+        public IEnumerable<City> GetAll()
+        {
+            return _context.Cities;
+        }
+
         public City GetById(int cityId)
         {
-            return _context.Cities
+            return GetAll()
                         .FirstOrDefault(city => city.Id == cityId);
         }
     }

@@ -4,13 +4,14 @@ import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import NavBar from './navbar/navbar'
 import { Contact as ContactModel } from './model/Contact';
-import {getAllContacts,getAllCompanies,getAllRequests} from './service/api'
+import {getAllContacts,getAllCompanies,getAllRequests,getAllCities} from './service/api'
 import { promises } from 'dns';
 import Contact from './contact/index'
 import {Company as CompanyModel } from './model/Company';
 import Company from './company/index'
 import {RequestForCooperation as RequestForCooperationModel} from './model/RequestForCooperation'
 import Request from './request/index'
+import {City as CityModel} from './model/City'
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -34,6 +35,7 @@ interface State{
   contacts:ContactModel[]
   companies:CompanyModel[]
   requests:RequestForCooperationModel[]
+  cities:CityModel[]
 }
 
 
@@ -42,6 +44,7 @@ function App() {
   let [contacts,setContacts] = useState<ContactModel[]>([])
   let [companies,setCompanies] = useState<CompanyModel[]>([])
   let [requests,setRequests] = useState<RequestForCooperationModel[]>([])
+  let [cities,setCities] = useState<CityModel[]>([])
 
   const getContacts = async()=>{
     try{
@@ -67,6 +70,14 @@ function App() {
     }
   }
 
+  const getCities = async()=>{
+    try{
+      setCities(await getAllCities())
+    }catch(e){
+      console.log(e)
+    }
+  }
+
 
 
   useEffect(()=>{
@@ -74,6 +85,7 @@ function App() {
       await getContacts();
       await getCompanies();
       await getRequests();
+      await getCities();
     })();
   },[])
 

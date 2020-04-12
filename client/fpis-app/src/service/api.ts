@@ -43,3 +43,15 @@ export async function getAllRequests(){
     }
     return cooperations.map((cooperation:any)=>({...cooperation}))
 }
+
+export async function getAllCities(){
+    let res = await fetch(baseUrl+'/company/cities')
+    let cities = await res.json()
+    var dataStr = JSON.stringify(cities)
+    try{
+        cities = JSON.parse(dataStr)
+    }catch(e){
+        console.log(e)
+    }
+    return cities.map((cities:any)=>({...cities}))
+}
