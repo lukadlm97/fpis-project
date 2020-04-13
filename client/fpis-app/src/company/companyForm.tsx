@@ -9,7 +9,8 @@ import Select from '@material-ui/core/Select';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 
-
+import {ContactType} from '../model/enum/ContactType'
+import {Contact} from '../model/Contact'
 import {City} from '../model/City'
 import {Company} from '../model/Company'
 import {Location} from '../model/Location'
@@ -48,11 +49,35 @@ const CompanyEntrySchema = yup.object().shape({
                                             postalCode:yup.string()
                             }).required("Morate odabrati grad!")
                         })
-                    ).required('Mora se uneti adresa!')
+                    ).required('Mora se uneti adresa!'),
+        contacts:yup.array()
+        .of(
+            yup.object().shape({
+                id:yup.number()
+                    .default(0),
+                content:yup.string()
+                        .required(),
+                contactType:yup.mixed()
+                        .oneOf([
+                            'Email',
+                            'Phone',
+                            'MobilePhone',
+                            'Fax',
+                            'LinkedIn',
+                            'Instagram',
+                            'Facebook',
+                            'Twitter'
+                        ]),      
+            })
+        )
 });
 
 interface Props{
     cities:City[]
+}
+
+interface State{
+    contacts:Contact[]
 }
 
 function CompanyEntryForm (props:Props){
@@ -66,6 +91,9 @@ function CompanyEntryForm (props:Props){
             let cityForInsert:City = props.cities.find((element:City) => element.id === city)!;
             data.locations[0].city = cityForInsert;    
         }
+        if(contact != null){
+            data.contacts[0].contactType = contact
+        }
         console.log(data)
         reset()
     }
@@ -73,8 +101,8 @@ function CompanyEntryForm (props:Props){
 
     const [open, setOpen] = React.useState(false);
     const [city, setCity] = React.useState(0);
-  
-
+    const [contact,setContact] = React.useState(0)
+    const [openContact,setOpenContact] = React.useState(false)
 
     const handleClose = () => {
         setOpen(false);
@@ -86,6 +114,18 @@ function CompanyEntryForm (props:Props){
       const handleChange = (event: React.ChangeEvent<{ value: any }>) => {
         let city_id = event.target.value
         setCity(city_id);
+      };
+
+      const handleChangeContact = (event:React.ChangeEvent<{value:any}>)=>{
+          setContact(event.target.value)
+      }
+
+      const handleCloseContact = () => {
+        setOpenContact(false);
+      };
+    
+      const handleOpenContact = () => {
+        setOpenContact(true);
       };
 
     return(
@@ -157,6 +197,38 @@ function CompanyEntryForm (props:Props){
                             ))}
                         </Select>
                 </FormControl>
+
+                <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel id="demo-controlled-open-select-label">Vrsta kontakta</InputLabel>
+                        <Select
+                        labelId="demo-controlled-open-select-label"
+                        id="demo-controlled-open-select"
+                        open={openContact}
+                        onClose={handleCloseContact}
+                        onOpen={handleOpenContact}
+                        value={contact}
+                        onChange={handleChangeContact}
+                        >
+                            {Object.keys(ContactType).map(key =>(
+                            <MenuItem value={key} key={key}>
+                                {(key:number)=>(
+                                    ContactType[key]
+                                    )!}
+                            </MenuItem>
+                            ))}
+                          
+                        </Select>
+                </FormControl>
+                
+                <TextField
+                inputRef={register}
+                label="Sadrzaj kontakta"
+                name="contacts[0].content"
+                variant="outlined"
+                fullWidth
+                error={!!errors.contacts}
+                helperText={errors.contacts?errors.contacts.values:''}
+                />
 
 
                 <Box display="flex" justifyContent="flex-end">
