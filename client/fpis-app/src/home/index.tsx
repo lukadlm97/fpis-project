@@ -1,11 +1,16 @@
 import React from 'react'
 import CompanyEntryForm from '../company/companyForm'
+import {City} from '../model/City'
 
-const Home:React.FC = () =>{
+interface Props{
+    cities:City[]
+}
+
+function Home(props:Props){
     return(
         <>
             <h1>Pocetna strana</h1>
-            <CompanyEntryForm />
+            <CompanyEntryForm cities={props.cities}/>
         </>
     );
 }

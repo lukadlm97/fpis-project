@@ -3,6 +3,14 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import {useForm} from 'react-hook-form'
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
+
+
+import {City} from '../model/City'
 import {Company} from '../model/Company'
 import {Location} from '../model/Location'
 import * as yup from 'yup'
@@ -43,9 +51,11 @@ const CompanyEntrySchema = yup.object().shape({
                     ).required('Mora se uneti adresa!')
 });
 
+interface Props{
+    cities:City[]
+}
 
-
-const CompanyEntryForm =()=>{
+function CompanyEntryForm (props:Props){
 
     const {register,handleSubmit,errors,reset} = useForm<Company>({
         validationSchema:CompanyEntrySchema
@@ -56,6 +66,22 @@ const CompanyEntryForm =()=>{
         reset()
     }
     const classes=useStyles()
+
+    const [open, setOpen] = React.useState(false);
+    const [city, setCity] = React.useState<City>(props.cities[0]);
+  
+
+
+    const handleClose = () => {
+        setOpen(false);
+      };
+    
+      const handleOpen = () => {
+        setOpen(true);
+      };
+      const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        setCity(event.target.value as City);
+      };
 
     return(
         <>
@@ -106,6 +132,26 @@ const CompanyEntryForm =()=>{
                 error={!!errors.locations}
                 helperText={errors.locations?errors.locations.values:''}
                 />
+
+                <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
+                        <Select
+                        labelId="demo-controlled-open-select-label"
+                        id="demo-controlled-open-select"
+                        open={open}
+                        onClose={handleClose}
+                        onOpen={handleOpen}
+                        value={city}
+                        name="locations[0].city"
+                        onChange={handleChange}
+                        >
+                            {props.cities.map((city)=>(
+                            <MenuItem value={city.id} key={city.name}>
+                                {city.name}
+                            </MenuItem>
+                            ))}
+                        </Select>
+                </FormControl>
 
 
                 <Box display="flex" justifyContent="flex-end">

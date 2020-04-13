@@ -13,6 +13,7 @@ import {RequestForCooperation as RequestForCooperationModel} from './model/Reque
 import Request from './request/index'
 import {City as CityModel} from './model/City'
 
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -130,7 +131,7 @@ function App() {
             <div>
                 <Container maxWidth="md">
                     <Switch>
-                        <Route exact path="/" component={Home}/>
+                        <Route exact path="/" component={() => <Home cities={cities}/>}/>
                         <Route exact path="/company" component={() => <Company companies={companies}/>} />
                         <Route exact path="/request" component={() => <Request requests={requests} />} />
                         <Route exact path="/contact" component={()=> <Contact contacts={contacts} />}/>
