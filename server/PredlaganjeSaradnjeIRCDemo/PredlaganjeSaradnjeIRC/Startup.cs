@@ -37,7 +37,9 @@ namespace PredlaganjeSaradnjeIRC
                     builder =>
                     {
                         builder
-                        .AllowAnyOrigin();
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
                     });
             });
 
