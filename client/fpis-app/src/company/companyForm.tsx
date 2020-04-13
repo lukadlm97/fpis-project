@@ -134,7 +134,7 @@ function CompanyEntryForm (props:Props){
                 />
 
                 <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
+                        <InputLabel id="demo-controlled-open-select-label">Grad odakle je kompanija</InputLabel>
                         <Select
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
