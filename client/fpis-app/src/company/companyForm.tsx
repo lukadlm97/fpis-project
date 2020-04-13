@@ -73,7 +73,8 @@ const CompanyEntrySchema = yup.object().shape({
 });
 
 interface Props{
-    cities:City[]
+    cities:City[],
+    onAddCompany:(company:Company)=>Promise<any>;
 }
 
 interface State{
@@ -86,6 +87,7 @@ function CompanyEntryForm (props:Props){
         validationSchema:CompanyEntrySchema
     })
 
+
     const onSubmit = (data:Company):void=>{
         if(city != null){
             let cityForInsert:City = props.cities.find((element:City) => element.id === city)!;
@@ -94,7 +96,9 @@ function CompanyEntryForm (props:Props){
         if(contact != null){
             data.contacts[0].contactType = contact
         }
+        
         console.log(data)
+        props.onAddCompany(new Company(0,data.locations,data.contacts,data.name,data.name+"new",data.name+"new"))
         reset()
     }
     const classes=useStyles()

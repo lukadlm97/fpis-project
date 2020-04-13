@@ -1,6 +1,7 @@
 import {Contact} from '../model/Contact'
 import {ContactResponse} from '../model/ContactResponse'
 import axios from 'axios'
+import { Company } from '../model/Company'
 
 const baseUrl = "https://localhost:44360/api"
 
@@ -54,4 +55,16 @@ export async function getAllCities(){
         console.log(e)
     }
     return cities.map((cities:any)=>({...cities}))
+}
+
+export async function addNewCompany(company:Company) {
+    let {id,...comp} = company
+    let res = await fetch(baseUrl+'/company',{
+        method:'POST',
+        body:JSON.stringify(comp),
+        headers:{
+            'Content-Type':'application/json'
+        }
+    });
+    return await res.json()
 }

@@ -4,7 +4,7 @@ import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import NavBar from './navbar/navbar'
 import { Contact as ContactModel } from './model/Contact';
-import {getAllContacts,getAllCompanies,getAllRequests,getAllCities} from './service/api'
+import {addNewCompany,getAllContacts,getAllCompanies,getAllRequests,getAllCities} from './service/api'
 import { promises } from 'dns';
 import Contact from './contact/index'
 import {Company as CompanyModel } from './model/Company';
@@ -46,6 +46,7 @@ function App() {
   let [companies,setCompanies] = useState<CompanyModel[]>([])
   let [requests,setRequests] = useState<RequestForCooperationModel[]>([])
   let [cities,setCities] = useState<CityModel[]>([])
+  let [error,setError] = useState('')
 
   const getContacts = async()=>{
     try{
@@ -79,6 +80,15 @@ function App() {
     }
   }
 
+  const onAddCompany = async(company:CompanyModel)=>{
+    try{
+      let res = await addNewCompany(company)
+      if(res.error)setError(res.error)
+      else setCompanies([...companies,{...company}]);
+    }catch(e){
+      setError('Network error')
+    }
+  }
 
 
   useEffect(()=>{
@@ -131,7 +141,8 @@ function App() {
             <div>
                 <Container maxWidth="md">
                     <Switch>
-                        <Route exact path="/" component={() => <Home cities={cities}/>}/>
+                        <Route exact path="/" component={() => <Home cities={cities}
+                                                                onAddCompany={onAddCompany}/>}/>
                         <Route exact path="/company" component={() => <Company companies={companies}/>} />
                         <Route exact path="/request" component={() => <Request requests={requests} />} />
                         <Route exact path="/contact" component={()=> <Contact contacts={contacts} />}/>
