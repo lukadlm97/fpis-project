@@ -62,13 +62,17 @@ function CompanyEntryForm (props:Props){
     })
 
     const onSubmit = (data:Company):void=>{
+        if(city != null){
+            let cityForInsert:City = props.cities.find((element:City) => element.id === city)!;
+            data.locations[0].city = cityForInsert;    
+        }
         console.log(data)
         reset()
     }
     const classes=useStyles()
 
     const [open, setOpen] = React.useState(false);
-    const [city, setCity] = React.useState<City>(props.cities[0]);
+    const [city, setCity] = React.useState(0);
   
 
 
@@ -79,8 +83,9 @@ function CompanyEntryForm (props:Props){
       const handleOpen = () => {
         setOpen(true);
       };
-      const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setCity(event.target.value as City);
+      const handleChange = (event: React.ChangeEvent<{ value: any }>) => {
+        let city_id = event.target.value
+        setCity(city_id);
       };
 
     return(
@@ -142,12 +147,12 @@ function CompanyEntryForm (props:Props){
                         onClose={handleClose}
                         onOpen={handleOpen}
                         value={city}
-                        name="locations[0].city"
                         onChange={handleChange}
+                        defaultValue = {props.cities[1]}
                         >
-                            {props.cities.map((city)=>(
-                            <MenuItem value={city.id} key={city.name}>
-                                {city.name}
+                            {props.cities.map((cityM)=>(
+                            <MenuItem value={cityM.id} key={cityM.name}>
+                                {cityM.name}
                             </MenuItem>
                             ))}
                         </Select>
