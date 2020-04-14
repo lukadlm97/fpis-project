@@ -4,7 +4,7 @@ import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import NavBar from './navbar/navbar'
 import { Contact as ContactModel } from './model/Contact';
-import {addNewCompany,getAllContacts,getAllCompanies,getAllRequests,getAllCities} from './service/api'
+import {addNewCompany,getAllContacts,getAllCompanies,getAllRequests,getAllCities,removeCompany} from './service/api'
 import { promises } from 'dns';
 import Contact from './contact/index'
 import {Company as CompanyModel } from './model/Company';
@@ -92,6 +92,16 @@ function App() {
     }
   }
 
+  const onRemoveCompany = async() =>{
+    try{
+      const companyId = selectedRowCompany!;
+      await removeCompany(companyId);
+      setCompanies(companies.filter((company:CompanyModel)=>company.id!==companyId));
+      setSelectedRowCompany(null)
+    }catch(e){
+      setError("Network error");
+    }
+  }
 
   useEffect(()=>{
     (async function(){
@@ -148,7 +158,8 @@ function App() {
                                                                                 cities={cities} 
                                                                                 onAddCompany={onAddCompany} 
                                                                                 selectedRowCompany={selectedRowCompany}
-                                                                                setSelectedRowCompany={setSelectedRowCompany}/>}/>
+                                                                                setSelectedRowCompany={setSelectedRowCompany}
+                                                                                onRemoveCompany={onRemoveCompany}/>}/>
                         <Route exact path="/request" component={() => <Request requests={requests} />} />
                         <Route exact path="/contact" component={()=> <Contact contacts={contacts} />}/>
                         <Redirect to="/"/>

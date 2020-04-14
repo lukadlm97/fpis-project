@@ -3,7 +3,7 @@ import CompanyEntryForm from './companyForm'
 import Company from './companyTab'
 import {City} from '../model/City'
 import {Company as CompanyModel} from '../model/Company'
-
+import Functionality from './functionality'
 
 
 interface Props{
@@ -12,6 +12,7 @@ interface Props{
     companies:CompanyModel[];
     selectedRowCompany:number|null;
     setSelectedRowCompany:(id:number|null)=>any;
+    onRemoveCompany:()=>Promise<any>;
 }
 
 
@@ -21,6 +22,10 @@ function CompanyController(props:Props){
     <Company companies={props.companies}
                 selectedRowCompany={props.selectedRowCompany}
                 setSelectedRowCompany={props.setSelectedRowCompany}/>
+    
+    <Functionality onRemoveCompany={props.onRemoveCompany} 
+                    selectedRowCompany={props.selectedRowCompany}/>
+    
     <CompanyEntryForm cities={props.cities}
                         onAddCompany={props.onAddCompany}/>
     </>

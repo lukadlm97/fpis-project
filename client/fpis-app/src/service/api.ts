@@ -68,3 +68,10 @@ export async function addNewCompany(company:Company) {
     });
     return await res.json()
 }
+
+
+export async function removeCompany(id:number){
+    let res = await fetch(baseUrl+`/company/${id}`,{
+        method:'DELETE'
+    });
+}

@@ -87,7 +87,7 @@ function Company(props:Props){
                         </TableHead>
                         <TableBody>
                             {props.companies.map((company)=>(
-                                <StyledTableRow key={company.name} style={props.selectedRowCompany===company.id?{backgroundColor:"#BEB5B5"}:{}}
+                                <StyledTableRow key={company.name} style={props.selectedRowCompany===company.id?{backgroundColor:"#E91E63"}:{}}
                                 onClick={() => setSelectedRow(company.id)}>
                                 <StyledTableCell>
                                    {company.name}
