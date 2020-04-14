@@ -13,7 +13,6 @@ import {ContactType} from '../model/enum/ContactType'
 import {Contact} from '../model/Contact'
 import {City} from '../model/City'
 import {Company} from '../model/Company'
-import {Location} from '../model/Location'
 import * as yup from 'yup'
 import useStyles from './style'
 

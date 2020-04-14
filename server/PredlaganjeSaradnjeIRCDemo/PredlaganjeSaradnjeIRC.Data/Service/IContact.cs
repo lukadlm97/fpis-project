@@ -14,5 +14,6 @@ namespace PredlaganjeSaradnjeIRC.Data.Service
         bool Update(int companyId, int contactId, Contact updatedContact);
         bool Delete(int id, int contactId);
 
+        Contact GetInserted();
     }
 }

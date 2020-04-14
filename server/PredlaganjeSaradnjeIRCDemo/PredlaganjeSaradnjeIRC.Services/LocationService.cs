@@ -24,6 +24,9 @@ namespace PredlaganjeSaradnjeIRC.Services
             var company = _context.Companies.Include(company => company.Locations)
                                                 .FirstOrDefault(company => company.Id == companyId);
 
+            if (company == null)
+                return false;
+
             company.Locations = AddNewLocation(company.Locations, newLocation);
 
             try
@@ -72,6 +75,12 @@ namespace PredlaganjeSaradnjeIRC.Services
 
             return company.Locations
                 .LastOrDefault();
+        }
+
+        public Location GetInserted()
+        {
+            return _context.Locations
+                            .LastOrDefault();
         }
     }
 }

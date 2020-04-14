@@ -53,8 +53,9 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         {
             if (companyService.Add(newCompany))
             {
+                var company = companyService.GetInserted();
                 // TODO: da se vraca kompanija koja je dodat kao objekat
-                return Created("Kompanija je uspesno dodata!","");
+                return Created("",company);
             }
             return Forbid("Nemoguce uneti novu kompaniju!");
         }
@@ -109,8 +110,8 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         {
             if (companyService.AddNewContact(id,contact))
             {
-                // TODO: da se vraca kontakt koji je dodat kao objekat
-                return Created("Kontakt je uspesno dodat!", "");
+                var insertedContact = contactService.GetInserted();
+                return Created("Kontakt je uspesno dodat!", insertedContact);
             }
             return Forbid("Nemoguce uneti novi kontakt!");
         }
@@ -153,7 +154,8 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         {
             if (locationService.Add(id, newLocation))
             {
-                return Created("Uspesno ste dodali lokaciju za kompaniju","");
+                var location = locationService.GetByCompanyId(id);
+                return Created("Uspesno ste dodali lokaciju za kompaniju",location);
             }
             return BadRequest("Nije moguce uneti lokaciju za kompaniju");
         }

@@ -9,5 +9,7 @@ namespace PredlaganjeSaradnjeIRC.Data.Service
     {
         Location GetByCompanyId(int companyId);
         bool Add(int companyId, Location newLocation);
+
+        Location GetInserted();
     }
 }

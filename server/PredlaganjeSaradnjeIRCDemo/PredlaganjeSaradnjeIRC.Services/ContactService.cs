@@ -115,5 +115,10 @@ namespace PredlaganjeSaradnjeIRC.Services
 
             return contacts.FirstOrDefault(c => c.Id == contactId);
         }
+
+        public Contact GetInserted()
+        {
+            return GetAll().LastOrDefault();
+        }
     }
 }

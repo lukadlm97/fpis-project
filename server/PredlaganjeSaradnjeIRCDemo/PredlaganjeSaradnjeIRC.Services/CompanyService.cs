@@ -176,5 +176,10 @@ namespace PredlaganjeSaradnjeIRC.Services
             companyForUpdate.Username = updatedCompany.Username;
             companyForUpdate.Password = updatedCompany.Password;
         }
+
+        public object GetInserted()
+        {
+            return GetAll().LastOrDefault();
+        }
     }
 }

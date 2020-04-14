@@ -2,6 +2,7 @@ import {Contact} from '../model/Contact'
 import {ContactResponse} from '../model/ContactResponse'
 import axios from 'axios'
 import { Company } from '../model/Company'
+import {Location} from '../model/Location'
 
 const baseUrl = "https://localhost:44360/api"
 
@@ -69,6 +70,28 @@ export async function addNewCompany(company:Company) {
     return await res.json()
 }
 
+export async function addNewContact(contact:Contact,id:number){
+    let res = await fetch(baseUrl+`/company/${id}/contact`,{
+        method:'POST',
+        body:JSON.stringify(contact),
+        headers:{
+            'Content-Type':'application/json'
+        }
+    });
+    return await res.json();
+}
+
+export async function addNewLocation(location:Location,id:number){
+    let res = await fetch(baseUrl+`/company/${id}/location`,{
+        method:'POST',
+        body:JSON.stringify(location),
+        headers:{
+            'Content-Type':'application/json'
+        }
+    });
+    console.log(res)
+    return await res.json();
+}
 
 export async function removeCompany(id:number){
     let res = await fetch(baseUrl+`/company/${id}`,{

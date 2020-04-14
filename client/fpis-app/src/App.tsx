@@ -4,7 +4,7 @@ import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import NavBar from './navbar/navbar'
 import { Contact as ContactModel } from './model/Contact';
-import {addNewCompany,getAllContacts,getAllCompanies,getAllRequests,getAllCities,removeCompany} from './service/api'
+import {addNewLocation,addNewCompany,getAllContacts,getAllCompanies,getAllRequests,getAllCities,removeCompany,addNewContact} from './service/api'
 import { promises } from 'dns';
 import Contact from './contact/index'
 import {Company as CompanyModel } from './model/Company';
@@ -12,7 +12,7 @@ import Company from './company/index'
 import {RequestForCooperation as RequestForCooperationModel} from './model/RequestForCooperation'
 import Request from './request/index'
 import {City as CityModel} from './model/City'
-
+import {Location} from './model/Location'
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -86,7 +86,7 @@ function App() {
     try{
       let res = await addNewCompany(company)
       if(res.error)setError(res.error)
-      else setCompanies([...companies,{...company}]);
+      else setCompanies([...companies,{...res}]);
     }catch(e){
       setError('Network error')
     }
@@ -100,6 +100,32 @@ function App() {
       setSelectedRowCompany(null)
     }catch(e){
       setError("Network error");
+    }
+  }
+
+  const onAddNewContact = async(contact:ContactModel) =>{
+    try{
+      const companyId = selectedRowCompany!;
+      await addNewContact(contact,companyId);
+      setSelectedRowCompany(null)
+    }catch(e){
+      setError(e)
+    }
+  }
+  
+  const onAddNewLocation = async(location:Location)=>{
+    try{
+      const companyId = selectedRowCompany!;
+      if(selectedRowCompany===null){
+        setError("Morate odabrati kompaniju!")
+        return;
+      }
+      let res = await addNewLocation(location,companyId);
+      console.log(res)
+      //  if(res.error)setError(res.error)   
+      setSelectedRowCompany(null)
+    }catch(e){
+      setError(e)
     }
   }
 
@@ -159,7 +185,10 @@ function App() {
                                                                                 onAddCompany={onAddCompany} 
                                                                                 selectedRowCompany={selectedRowCompany}
                                                                                 setSelectedRowCompany={setSelectedRowCompany}
-                                                                                onRemoveCompany={onRemoveCompany}/>}/>
+                                                                                onRemoveCompany={onRemoveCompany}
+                                                                                onAddContact={onAddNewContact}
+                                                                                onAddLocation={onAddNewLocation}
+                                                                                />}/>
                         <Route exact path="/request" component={() => <Request requests={requests} />} />
                         <Route exact path="/contact" component={()=> <Contact contacts={contacts} />}/>
                         <Redirect to="/"/>
