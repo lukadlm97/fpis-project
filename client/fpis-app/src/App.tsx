@@ -122,7 +122,8 @@ function App() {
       }
       let res = await addNewLocation(location,companyId);
       console.log(res)
-      //  if(res.error)setError(res.error)   
+      if(res.error)setError(res.error)  
+    //  else setCompanies(companies.map((comp:CompanyModel)=>comp.id===selectedRowCompany?comp.locations[comp.locations]))
       setSelectedRowCompany(null)
     }catch(e){
       setError(e)
