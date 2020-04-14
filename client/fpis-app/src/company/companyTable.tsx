@@ -14,7 +14,9 @@ import TableRow from '@material-ui/core/TableRow';
 
 
 interface Props{
-    companies:Company[]
+    companies:Company[],
+    selectedRowCompany:number|null;
+    setSelectedRowCompany:(id:number|null)=>any;
 }
 
 interface Column {

@@ -33,10 +33,11 @@ import Home from './home/index'
 
 
 interface State{
-  contacts:ContactModel[]
-  companies:CompanyModel[]
-  requests:RequestForCooperationModel[]
-  cities:CityModel[]
+  contacts:ContactModel[];
+  companies:CompanyModel[];
+  requests:RequestForCooperationModel[];
+  cities:CityModel[];
+  selectedRowCompany:number|null;
 }
 
 
@@ -47,6 +48,7 @@ function App() {
   let [requests,setRequests] = useState<RequestForCooperationModel[]>([])
   let [cities,setCities] = useState<CityModel[]>([])
   let [error,setError] = useState('')
+  let [selectedRowCompany,setSelectedRowCompany] = useState<number|null>(null) 
 
   const getContacts = async()=>{
     try{
@@ -141,9 +143,12 @@ function App() {
             <div>
                 <Container maxWidth="md">
                     <Switch>
-                        <Route exact path="/" component={() => <Home cities={cities}
-                                                                onAddCompany={onAddCompany}/>}/>
-                        <Route exact path="/company" component={() => <Company companies={companies}/>} />
+                        <Route exact path="/" component={() => <Home onAddCompany={onAddCompany} cities={cities}/>}/>
+                        <Route exact path="/company" component={() =>  <Company companies={companies} 
+                                                                                cities={cities} 
+                                                                                onAddCompany={onAddCompany} 
+                                                                                selectedRowCompany={selectedRowCompany}
+                                                                                setSelectedRowCompany={setSelectedRowCompany}/>}/>
                         <Route exact path="/request" component={() => <Request requests={requests} />} />
                         <Route exact path="/contact" component={()=> <Contact contacts={contacts} />}/>
                         <Redirect to="/"/>
@@ -152,6 +157,7 @@ function App() {
             </div>
         </div>
     </Router>
+    {error && <h1>{error}</h1>}
    </>
   );
 }
