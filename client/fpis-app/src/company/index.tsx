@@ -4,9 +4,10 @@ import Company from './companyTab'
 import {City} from '../model/City'
 import {Company as CompanyModel} from '../model/Company'
 import Functionality from './functionality'
-import ContactForm from './companyAddNewLocationForm';
+import LocationForm from './companyAddNewLocationForm';
 import { Contact } from '../model/Contact'
 import {Location} from '../model/Location'
+import ContactForm from './contactForm'
 
 
 interface Props{
@@ -16,7 +17,7 @@ interface Props{
     selectedRowCompany:number|null;
     setSelectedRowCompany:(id:number|null)=>any;
     onRemoveCompany:()=>Promise<any>;
-    onAddContact:(contact:Contact,id:number)=>Promise<any>;
+    onAddContact:(contact:Contact,id:number|null)=>Promise<any>;
     onAddLocation:(location:Location,id:number|null)=>Promise<any>
 }
 
@@ -33,11 +34,13 @@ function CompanyController(props:Props){
         
         <CompanyEntryForm cities={props.cities}
                             onAddCompany={props.onAddCompany}/>
-        <ContactForm cities={props.cities}
+        <LocationForm cities={props.cities}
                         selectedRowCompany={props.selectedRowCompany}
                         onAddLocation={props.onAddLocation}
                      />
-    
+        <ContactForm selectedRowCompany={props.selectedRowCompany}
+                        onAddContact={props.onAddContact} />
+
     </>
     )
 }

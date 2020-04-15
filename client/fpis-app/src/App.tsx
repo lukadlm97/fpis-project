@@ -105,8 +105,14 @@ function App() {
 
   const onAddNewContact = async(contact:ContactModel) =>{
     try{
+      if(selectedRowCompany===null){
+        setError("Morate odabrati kompaniju!")
+        return;
+      }
       const companyId = selectedRowCompany!;
-      await addNewContact(contact,companyId);
+      let res = await addNewContact(contact,companyId);
+      console.log(res)
+      if(res.error)setError(res.error)
       setSelectedRowCompany(null)
     }catch(e){
       setError(e)
@@ -115,11 +121,11 @@ function App() {
   
   const onAddNewLocation = async(location:Location)=>{
     try{
-      const companyId = selectedRowCompany!;
       if(selectedRowCompany===null){
         setError("Morate odabrati kompaniju!")
         return;
       }
+      const companyId = selectedRowCompany!;
       let res = await addNewLocation(location,companyId);
       console.log(res)
       if(res.error)setError(res.error)  
@@ -129,6 +135,7 @@ function App() {
       setError(e)
     }
   }
+
 
   useEffect(()=>{
     (async function(){

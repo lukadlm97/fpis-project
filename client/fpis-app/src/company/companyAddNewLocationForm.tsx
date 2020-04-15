@@ -44,7 +44,7 @@ const LocationEntrySchema = yup.object().shape({
 
 
 
-function ContactForm(props:Props){
+function LocationForm(props:Props){
     const [open, setOpen] = React.useState(false);
     const [city, setCity] = React.useState(0);
     const {register,handleSubmit,errors,reset} = useForm<Location>({
@@ -144,4 +144,4 @@ function ContactForm(props:Props){
     );
 }
 
-export default ContactForm;
+export default LocationForm;
