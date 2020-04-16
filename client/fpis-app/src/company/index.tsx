@@ -12,10 +12,10 @@ import ContactForm from './contactForm'
 
 interface Props{
     cities:City[];
-    onAddCompany:(company:CompanyModel)=>Promise<any>;
     companies:CompanyModel[];
     selectedRowCompany:number|null;
     setSelectedRowCompany:(id:number|null)=>any;
+    onAddCompany:(company:CompanyModel)=>Promise<any>;
     onRemoveCompany:()=>Promise<any>;
     onAddContact:(contact:Contact,id:number|null)=>Promise<any>;
     onAddLocation:(location:Location,id:number|null)=>Promise<any>

@@ -10,11 +10,11 @@ export class RequestForCooperation{
 
     date:Date;
 
-    company:Company;
+    company:Company|null;
 
-    employee:Employee;
+    employee:Employee|null;
 
-    constructor(id:number,title:string,descriptionOfProposal:string,date:Date,company:Company,employee:Employee){
+    constructor(id:number,title:string,descriptionOfProposal:string,date:Date,company:Company|null,employee:Employee|null){
         this.id=id;
         this.title=title;
         this.descriptionOfProposal=descriptionOfProposal;

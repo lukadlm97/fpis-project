@@ -77,7 +77,7 @@ function RequestTable(props:Props) {
                                    style={{fontSize:15,color:"#727bb8"}}
                                    />
                                      {" "}
-                               {request.company.name}
+                               {request.company?request.company.name:""}
                                </Box>
                            </Typography>
                            <Typography variant="body2" component="p">

@@ -4,7 +4,10 @@ import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import NavBar from './navbar/navbar'
 import { Contact as ContactModel } from './model/Contact';
-import {getAllEmployee,addNewLocation,addNewCompany,getAllContacts,getAllCompanies,getAllRequests,getAllCities,removeCompany,addNewContact} from './service/api'
+import {getAllEmployee,addNewLocation,addNewCompany,getAllContacts,
+        getAllCompanies,getAllRequests,getAllCities,removeCompany,
+        addNewContact,addNewRequest,addMoreDescription,removeRequest,
+        updateRequest} from './service/api'
 import { promises } from 'dns';
 import Contact from './contact/index'
 import {Company as CompanyModel } from './model/Company';
@@ -104,6 +107,16 @@ function App() {
     }
   }
 
+  const onAddRequest = async(request:RequestForCooperationModel)=>{
+    try{
+      let res = await addNewRequest(request)
+      if(res.error)setError(res.error)
+      else setRequests([...requests,{...res}]);
+    }catch(e){
+      setError('Network error')
+    }
+  }
+
   const onRemoveCompany = async() =>{
     try{
       const companyId = selectedRowCompany!;
@@ -112,6 +125,17 @@ function App() {
       setSelectedRowCompany(null)
     }catch(e){
       setError("Network error");
+    }
+  }
+
+  const onRemoveRequest = async()=>{
+    try{
+      const requestId = selectedRowRequest!;
+      await removeRequest(requestId);
+      setRequests(requests.filter((request:RequestForCooperationModel)=>request.id!==requestId));
+      setSelectedRowRequest(null)
+    }catch(e){
+      setError('Network error')
     }
   }
 
@@ -141,13 +165,38 @@ function App() {
       let res = await addNewLocation(location,companyId);
       console.log(res)
       if(res.error)setError(res.error)  
-    //  else setCompanies(companies.map((comp:CompanyModel)=>comp.id===selectedRowCompany?comp.locations[comp.locations]))
+     // else setCompanies(companies.map((comp:CompanyModel)=>comp.id===companyId?))
       setSelectedRowCompany(null)
     }catch(e){
       setError(e)
     }
   }
 
+  const onUpdateRequest = async(request:RequestForCooperationModel)=>{
+    try{
+      let res = await updateRequest(request);
+      if(res.error)setError(res.error)
+      else setRequests(requests.map((req:RequestForCooperationModel)=>req.id===request.id?request:req));
+    }catch(e){
+      setError("Network error")
+    }
+  }
+
+  const onAddMoreDescription = async(description:string)=>{
+    try{
+      if(selectedRowRequest===null){
+        setError("Morate odabrati zahtev!")
+        return;
+      }
+      const requestId =selectedRowRequest!;
+      let res = await addMoreDescription(description,requestId);
+      console.log(res);
+      if(res.error)setError(res.error)
+      setSelectedRowRequest(null)
+    }catch(e){
+      setError(e)
+    }
+  }
 
   useEffect(()=>{
     (async function(){
@@ -155,6 +204,7 @@ function App() {
       await getCompanies();
       await getRequests();
       await getCities();
+      await getEmployees();
     })();
   },[])
 
@@ -213,7 +263,11 @@ function App() {
                                                                                           companies={companies}
                                                                                           employees={employees}
                                                                                           selectedRowRequest={selectedRowRequest}
-                                                                                          setSelectedRowRequest={setSelectedRowRequest} />} />
+                                                                                          setSelectedRowRequest={setSelectedRowRequest}
+                                                                                          onAddRequest={onAddRequest}
+                                                                                          onUpdateRequest={onUpdateRequest}
+                                                                                          onAddMoreDescription={onAddMoreDescription}
+                                                                                          onRemoveRequest={onRemoveRequest} />} />
                         <Route exact path="/contact" component={()=> <Contact contacts={contacts} />}/>
                         <Redirect to="/"/>
                     </Switch>

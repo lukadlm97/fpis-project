@@ -3,6 +3,7 @@ import {ContactResponse} from '../model/ContactResponse'
 import axios from 'axios'
 import { Company } from '../model/Company'
 import {Location} from '../model/Location'
+import {RequestForCooperation} from '../model/RequestForCooperation'
 
 const baseUrl = "https://localhost:44360/api"
 
@@ -82,6 +83,17 @@ export async function addNewCompany(company:Company) {
     });
     return await res.json()
 }
+export async function addNewRequest(request:RequestForCooperation){
+    let {id,...req}=request
+    let res =await fetch(baseUrl+'/cooperation',{
+        method:'POST',
+        body:JSON.stringify(req),
+        headers:{
+            'Content-Type':'application/json'
+        }
+    });
+    return await res.json()
+}
 
 export async function addNewContact(contact:Contact,id:number){
     let res = await fetch(baseUrl+`/company/${id}/contact`,{
@@ -106,8 +118,37 @@ export async function addNewLocation(location:Location,id:number){
     return await res.json();
 }
 
+export async function addMoreDescription(description:string,id:number){
+    let res = await fetch(baseUrl+`/cooperation/${id}/appendRequest`,{
+        method:'POST',
+        body:JSON.stringify(description),
+        headers:{
+            'Content-Type':'application/json'
+        }
+    });
+    return await res.json();
+}
+
+export async function updateRequest(request:RequestForCooperation){
+    let {id,...req} = request;
+    let res = await fetch(baseUrl+`/cooperation/${id}`,{
+        method:'PUT',
+        body:JSON.stringify(req),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return await res.json();
+}
+
 export async function removeCompany(id:number){
     let res = await fetch(baseUrl+`/company/${id}`,{
         method:'DELETE'
     });
+}
+
+export async function removeRequest(id:number){
+    let res = await fetch(baseUrl+`/cooperation/${id}`,{
+        method:'DELETE'
+    })
 }
