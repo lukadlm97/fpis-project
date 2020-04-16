@@ -4,15 +4,16 @@ import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import NavBar from './navbar/navbar'
 import { Contact as ContactModel } from './model/Contact';
-import {addNewLocation,addNewCompany,getAllContacts,getAllCompanies,getAllRequests,getAllCities,removeCompany,addNewContact} from './service/api'
+import {getAllEmployee,addNewLocation,addNewCompany,getAllContacts,getAllCompanies,getAllRequests,getAllCities,removeCompany,addNewContact} from './service/api'
 import { promises } from 'dns';
 import Contact from './contact/index'
 import {Company as CompanyModel } from './model/Company';
 import Company from './company/index'
 import {RequestForCooperation as RequestForCooperationModel} from './model/RequestForCooperation'
-import Request from './request/index'
+import RequestController from './request/index'
 import {City as CityModel} from './model/City'
 import {Location} from './model/Location'
+import {Employee} from './model/Employee'
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -38,6 +39,7 @@ interface State{
   requests:RequestForCooperationModel[];
   cities:CityModel[];
   selectedRowCompany:number|null;
+  selectedRowRequest:number|null;
 }
 
 
@@ -49,6 +51,8 @@ function App() {
   let [cities,setCities] = useState<CityModel[]>([])
   let [error,setError] = useState('')
   let [selectedRowCompany,setSelectedRowCompany] = useState<number|null>(null) 
+  let [selectedRowRequest,setSelectedRowRequest] = useState<number|null>(null) 
+  let [employees,setEmployees] = useState<Employee[]>([]);
 
   const getContacts = async()=>{
     try{
@@ -77,6 +81,14 @@ function App() {
   const getCities = async()=>{
     try{
       setCities(await getAllCities())
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+  const getEmployees = async()=>{
+    try{
+      setEmployees(await getAllEmployee())
     }catch(e){
       console.log(e)
     }
@@ -197,7 +209,11 @@ function App() {
                                                                                 onAddContact={onAddNewContact}
                                                                                 onAddLocation={onAddNewLocation}
                                                                                 />}/>
-                        <Route exact path="/request" component={() => <Request requests={requests} />} />
+                        <Route exact path="/request" component={() => <RequestController requests={requests}
+                                                                                          companies={companies}
+                                                                                          employees={employees}
+                                                                                          selectedRowRequest={selectedRowRequest}
+                                                                                          setSelectedRowRequest={setSelectedRowRequest} />} />
                         <Route exact path="/contact" component={()=> <Contact contacts={contacts} />}/>
                         <Redirect to="/"/>
                     </Switch>

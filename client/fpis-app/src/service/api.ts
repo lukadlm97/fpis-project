@@ -21,6 +21,19 @@ export async function getAllContacts(){
     return contacts.map((contact:any)=>({...contact}));
 }
 
+export async function getAllEmployee(){
+    let res = await fetch(baseUrl+'/cooperation/employee')
+    let employees = await res.json()
+    var dataStr = JSON.stringify(employees)
+    console.log(dataStr)
+    try{
+        employees = JSON.parse(dataStr)
+    }catch(e){
+        console.log(e)
+    }
+    return employees.map((employee:any)=>({...employee}))
+}
+
 export async function getAllCompanies(){
     let res = await fetch(baseUrl+"/company")
     let companies = await res.json()

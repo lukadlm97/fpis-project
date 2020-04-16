@@ -15,10 +15,12 @@ namespace PredlaganjeSaradnjeIRC.Controllers
     public class CooperationController : ControllerBase
     {
         private readonly IRequestForCooperation _cooperationService;
+        private readonly IEmployee _employeeService;
 
-        public CooperationController(IRequestForCooperation cooperationService)
+        public CooperationController(IRequestForCooperation cooperationService,IEmployee employeeService)
         {
             _cooperationService = cooperationService;
+            _employeeService = employeeService;
         }
 
         [HttpGet]
@@ -53,7 +55,12 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         {
             if (_cooperationService.Add(newProposal))
             {
-                return Created("Predlog za saradnju uspesno kreiran", "Predlog za saradnju uspesno kreiran");
+                var insertedRequest = _cooperationService.GetLastInsterted();
+                if(insertedRequest == null)
+                {
+                    return BadRequest();
+                }
+                return Created("Uspesno kreiran objekat",insertedRequest);
             }
             return Forbid("Nije moguce kreirati novi predlog za saradnju.");
         }
@@ -86,6 +93,16 @@ namespace PredlaganjeSaradnjeIRC.Controllers
                 return Ok("Predlog je dopunjen!");
             }
             return BadRequest("Predlog nije moguce dopuniti!");
+        }
+        [HttpGet("employee")]
+        public async Task<ActionResult<Employee>> GetAllEmployee()
+        {
+            var employees = _employeeService.GetAll();
+            if(employees == null)
+            {
+                return NotFound();
+            }
+            return Ok(employees);
         }
     }
 }

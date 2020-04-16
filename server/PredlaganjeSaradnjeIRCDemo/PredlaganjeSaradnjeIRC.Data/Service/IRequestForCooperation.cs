@@ -18,5 +18,8 @@ namespace PredlaganjeSaradnjeIRC.Data.Service
 
         // bonus operation
         bool UpgradeDescription(int id, string description);
+
+        RequestForCooperation GetLastInsterted();
+
     }
 }

@@ -228,5 +228,9 @@ namespace PredlaganjeSaradnjeIRC.Services
             proposal.Date = DateTime.Now;
         }
 
+        public RequestForCooperation GetLastInsterted()
+        {
+            return GetAll().LastOrDefault();
+        }
     }
 }

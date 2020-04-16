@@ -16,7 +16,7 @@ import ContactMailIcon from '@material-ui/icons/ContactMail';
 
 import Home from '../home'
 import Company from '../company'
-import Request from '../request'
+import Request from '../request/tableForRequests'
 import useStyles from '../style'
 import HomeIcon from './homeicon'
 import Contact from '../contact'
