@@ -13,23 +13,23 @@ namespace PredlaganjeSaradnjeIRC.Controllers
     [ApiController]
     public class CompanyController : ControllerBase
     {
-        private readonly ICompany companyService;
-        private readonly IContact contactService;
-        private readonly ILocation locationService;
-        private readonly ICity cityService;
+        private readonly ICompany _companyService;
+        private readonly IContact _contactService;
+        private readonly ILocation _locationService;
+        private readonly ICity _cityService;
 
         public CompanyController(ICompany companyService,IContact contactService,ILocation locationService,ICity cityService)
         {
-            this.companyService = companyService;
-            this.contactService = contactService;
-            this.locationService = locationService;
-            this.cityService = cityService;
+            this._companyService = companyService;
+            _contactService = contactService;
+            _locationService = locationService;
+            _cityService = cityService;
         }
 
         [HttpGet]
         public async Task<ActionResult<Company>> GetCompanies()
         {
-            var companies = companyService.GetAll();
+            var companies = _companyService.GetAll();
 
             if (companies == null)
                 return NotFound();
@@ -40,7 +40,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> GetCompany(int id)
         {
-            var company = companyService.GetById(id);
+            var company = _companyService.GetById(id);
 
             if (company == null)
                 return NotFound();
@@ -51,9 +51,9 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpPost]
         public async Task<ActionResult<Company>> AddNewCompany([FromBody] Company newCompany)
         {
-            if (companyService.Add(newCompany))
+            if (_companyService.Add(newCompany))
             {
-                var company = companyService.GetInserted();
+                var company = _companyService.GetInserted();
                 // TODO: da se vraca kompanija koja je dodat kao objekat
                 return Created("",company);
             }
@@ -63,9 +63,14 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Company>> UpdateCompany(int id,[FromBody] Company updatedCompany)
         {
-            if (companyService.Update(id,updatedCompany))
+            if (_companyService.Update(id,updatedCompany))
             {
-                return Ok("Kompanija je uspesno izmenjena!");
+                var updated = _companyService.GetById(id);
+                if(updated == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(updated);
             }
             return Forbid("Nije moguce izmeniti kompaniju!");
         }
@@ -73,7 +78,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Company>> DeleteCompany(int id)
         {
-            if (companyService.Delete(id))
+            if (_companyService.Delete(id))
             {
                 return Ok("Kompanija je uspesno obrisana!");
             }
@@ -83,7 +88,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpGet("contacts")]
         public async Task<ActionResult<Contact>> GetAllContacts()
         {
-            var contacts = contactService.GetAll();
+            var contacts = _contactService.GetAll();
 
             if(contacts == null)
             {
@@ -96,7 +101,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpGet("{id}/contact")]
         public async Task<ActionResult<Contact>> GetContactsForCompany(int id)
         {
-            var contacts = contactService.GetAll(id);
+            var contacts = _contactService.GetAll(id);
 
             if (contacts == null)
             {
@@ -108,10 +113,10 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpPost("{id}/contact")]
         public async Task<ActionResult<Contact>> AddNewContact(int id,[FromBody] Contact contact)
         {
-            if (companyService.AddNewContact(id,contact))
+            if (_companyService.AddNewContact(id,contact))
             {
-                var insertedContact = contactService.GetInserted();
-                return Created("Kontakt je uspesno dodat!", insertedContact);
+                var company = _companyService.GetById(id);
+                return Created("Kontakt je uspesno dodat!", company);
             }
             return Forbid("Nemoguce uneti novi kontakt!");
         }
@@ -119,7 +124,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpDelete("{idCompany}/contact/{idContact}")]
         public async Task<ActionResult<Contact>> RemoveContact(int idCompany,int idContact)
         {
-            if (contactService.Delete(idCompany, idContact))
+            if (_contactService.Delete(idCompany, idContact))
             {
                 return Ok("Kontakt je uspesno obrisana!");
             }
@@ -129,7 +134,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpPut("{idCompany}/contact/{idContact}")]
         public async Task<ActionResult<Contact>> UpdateContact(int idCompany,int idContact,[FromBody] Contact updatedContact)
         {
-            if (contactService.Update(idCompany, idContact, updatedContact))
+            if (_contactService.Update(idCompany, idContact, updatedContact))
             {
                 return Ok("Kontakt je uspesno izmenjen!");
             }
@@ -139,7 +144,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpGet("{id}/location")]
         public async Task<ActionResult<Location>> GetLocationForCompany(int id)
         {
-            var location = locationService.GetByCompanyId(id);
+            var location = _locationService.GetByCompanyId(id);
 
             if (location == null)
             {
@@ -152,10 +157,10 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpPost("{id}/location")]
         public async Task<ActionResult<Location>> AddNewLocation(int id,[FromBody] Location newLocation)
         {
-            if (locationService.Add(id, newLocation))
+            if (_locationService.Add(id, newLocation))
             {
-                var location = locationService.GetByCompanyId(id);
-                return Created("Uspesno ste dodali lokaciju za kompaniju",location);
+                var company = _companyService.GetById(id);
+                return Created("Uspesno ste dodali lokaciju za kompaniju",company);
             }
             return BadRequest("Nije moguce uneti lokaciju za kompaniju");
         }
@@ -163,7 +168,7 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         [HttpGet("cities")]
         public async Task<ActionResult<City>> GetAllCities()
         {
-            var cities = cityService.GetAll();
+            var cities = _cityService.GetAll();
 
             if(cities == null)
             {

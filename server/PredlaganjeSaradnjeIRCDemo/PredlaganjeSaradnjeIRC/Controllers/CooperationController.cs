@@ -70,7 +70,12 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         {
             if (_cooperationService.Update(id, proposalForUpdate))
             {
-                return Ok("Predlog je uspesno izmenjen");
+                var updatedRequest = _cooperationService.GetById(id);
+                if(updatedRequest == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(updatedRequest);
             }
             return Forbid("Predlog nije moguce izmeniti");
         }
@@ -90,10 +95,16 @@ namespace PredlaganjeSaradnjeIRC.Controllers
         {
             if (_cooperationService.UpgradeDescription(id, description))
             {
-                return Ok("Predlog je dopunjen!");
+                var updatedRequest = _cooperationService.GetById(id);
+                if(updatedRequest == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(updatedRequest);
             }
             return BadRequest("Predlog nije moguce dopuniti!");
         }
+        
         [HttpGet("employee")]
         public async Task<ActionResult<Employee>> GetAllEmployee()
         {
