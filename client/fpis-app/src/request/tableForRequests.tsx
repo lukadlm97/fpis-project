@@ -42,7 +42,11 @@ function RequestTable(props:Props) {
 
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
-
+    
+    const setSelectedRow = (id: number) => {
+        if (props.selectedRowRequest === id) props.setSelectedRowRequest(null);
+        else props.setSelectedRowRequest(id);
+    }
 
     return(
         <>
@@ -51,8 +55,8 @@ function RequestTable(props:Props) {
            {props.requests.map((request)=>(
                <Box p={0.5} m={0.5}>
 
-                   <Card className={classes.root} style={{border:'3px solid grey'}} key={request.id}>
-                       <CardContent>
+                   <Card className={classes.root} style={{border:'3px solid grey'}}  key={request.id}>
+                       <CardContent style={props.selectedRowRequest===request.id?{backgroundColor:"#E91E63"}:{}}>
                            <Typography className={classes.title} color="textSecondary" gutterBottom>
                                <Box mr={1} pr={2}>
                                    <CalendarTodayIcon 
@@ -85,7 +89,7 @@ function RequestTable(props:Props) {
                            </Typography>
                        </CardContent>
                            <CardActions>
-                               <Button size="small">Detaljnije</Button>
+                               <Button size="small" onClick={()=>setSelectedRow(request.id)}>Detaljnije</Button>
                            </CardActions>
                </Card>
             </Box>

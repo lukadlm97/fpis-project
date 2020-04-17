@@ -111,9 +111,15 @@ function RequestEntryForm(props:Props){
 
     const onAdd = async(e:any)=>{
         e.preventDefault();
-        if(title !== '' && descriptionOfProposal!=='' && company!==null && employee!==null){
+        console.log(companyId,employeeId)
+        let companyFor:Company = props.companies.find((comp:Company) => comp.id===companyId)!; 
+        let employeeFor:Employee = props.employees.find((emp:Employee) => emp.id===employeeId)!;
+        console.log(companyFor,employeeFor,title,descriptionOfProposal)
+
+
+        if(title !== '' && descriptionOfProposal!=='' && companyFor!==null && companyFor !== undefined && employeeFor!==null && employeeFor !==undefined){
             console.log("RADI")
-            await props.onAdd(new RequestForCooperation(0,title,descriptionOfProposal,new Date(),company?company:null,employee?employee:null));
+            await props.onAdd(new RequestForCooperation(0,title,descriptionOfProposal,new Date(),companyFor?companyFor:null,employeeFor?employeeFor:null));
             reset()
         }
     }
@@ -125,20 +131,25 @@ function RequestEntryForm(props:Props){
 
     const onUpdate=async(e:any)=>{
         e.preventDefault();
-        if(title !== '' && descriptionOfProposal!=='' && company!==null && employee!==null){
-            await props.onUpdate(new RequestForCooperation(props.selectedRowRequest!,title,descriptionOfProposal,new Date(),company?company:null,employee?employee:null));
+        let companyFor:Company = props.companies.find((comp:Company) => comp.id===companyId)!; 
+        let employeeFor:Employee = props.employees.find((emp:Employee) => emp.id===employeeId)!;
+        
+        if(title !== '' && descriptionOfProposal!=='' && companyFor!==null && companyFor !== undefined && employeeFor!==null && employeeFor !==undefined){
+            await props.onUpdate(new RequestForCooperation(props.selectedRowRequest!,title,descriptionOfProposal,new Date(),companyFor?companyFor:null,employeeFor?employeeFor:null));
         }
     }
 
     return(
         <>
-            <form>
+            <form className={classes.formContainer}>
             <TextField
                 inputRef={register}
                 label="Naslov zahteva"
                 name="title"
                 variant="outlined"
                 fullWidth
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 error={!!errors.title}
                 helperText={errors.title?errors.title.message:''}
                 />
@@ -147,6 +158,9 @@ function RequestEntryForm(props:Props){
                 label="Opis zahteva"
                 name="descriptionOfProposal"
                 variant="outlined"
+                value={descriptionOfProposal}
+                onChange={(e) => setDescriptionOfProposal(e.target.value)}
+                multiline
                 rows={8}
                 fullWidth
                 error={!!errors.descriptionOfProposal}
@@ -185,7 +199,7 @@ function RequestEntryForm(props:Props){
                         >
                             {props.employees.map((emp)=>(
                             <MenuItem value={emp.id} key={emp.id}>
-                                {emp.firstName}+{" "}+{emp.lastName}
+                                {emp.firstName+" "+emp.lastName}
                             </MenuItem>
                             ))}
                         </Select>
@@ -193,6 +207,14 @@ function RequestEntryForm(props:Props){
                     
                 <Box display="flex" justifyContent="flex-end">
                     <Button  color="primary" variant="contained" onClick={onAdd}>Dodaj zahtev</Button>
+                </Box>
+
+                <Box display="flex" justifyContent="flex-end">
+                    <Button  color="default" variant="contained" disabled={props.selectedRowRequest===null} onClick={onUpdate}>Sacuvaj izmene</Button>
+                </Box>
+
+                <Box display="flex" justifyContent="flex-end">
+                    <Button  color="secondary" variant="contained" disabled={props.selectedRowRequest===null} onClick={onRemove}>Obrisi zahtev</Button>
                 </Box>
 
             </form>
