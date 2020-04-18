@@ -28,6 +28,7 @@ namespace PredlaganjeSaradnjeIRC.Services
             {
                 return null;
             }
+            _context.Entry(company).State = EntityState.Detached;
 
             return company.Contacts;
         }

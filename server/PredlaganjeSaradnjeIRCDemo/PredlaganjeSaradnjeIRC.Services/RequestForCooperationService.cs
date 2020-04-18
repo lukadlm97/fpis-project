@@ -113,6 +113,7 @@ namespace PredlaganjeSaradnjeIRC.Services
             SetProposalsAttributesUpdate(ref proposal, proposalForCooperation);
 
             proposal.Company.Contacts = contactService.GetAll(proposal.Company.Id);
+            
 
             try
             {
@@ -163,6 +164,7 @@ namespace PredlaganjeSaradnjeIRC.Services
             if(company.Locations == null)
             {
                 tempCompany = companyService.GetById(company.Id);
+                _context.Entry(tempCompany).State = EntityState.Detached;
             }
             else
             {
@@ -171,6 +173,7 @@ namespace PredlaganjeSaradnjeIRC.Services
             if(string.IsNullOrEmpty(employee.FirstName))
             {
                 tempEmployee = employeeService.GetById(employee.Id);
+                _context.Entry(tempEmployee).State = EntityState.Detached;
             }
             else
             {
@@ -187,7 +190,7 @@ namespace PredlaganjeSaradnjeIRC.Services
                     }
                 }
             }
-
+           // _context.Entry(newProposalForCooperation.Company.Locations).State = EntityState.Detached;
             newProposalForCooperation.Company = tempCompany;
             newProposalForCooperation.Employee = tempEmployee;
             newProposalForCooperation.Date = DateTime.Now;

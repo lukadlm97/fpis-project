@@ -12,8 +12,7 @@ function Home(props:Props){
     return(
         <>
             <h1>Pocetna strana</h1>
-            <CompanyEntryForm cities={props.cities}
-                                onAddCompany={props.onAddCompany}/>
+           
         </>
     );
 }

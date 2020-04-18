@@ -104,8 +104,8 @@ function RequestEntryForm(props:Props){
             let req:RequestForCooperation=props.requests.find((r:RequestForCooperation)=>r.id===props.selectedRowRequest)!;
             setTitle(req.title);
             setDescriptionOfProposal(req.descriptionOfProposal);
-            setCompany(req.company);
-            setEmployee(req.employee);
+            setCompanyId(req.company?.id!)
+            setEmployeeId(req.employee?.id!)
         }
     },[props.selectedRowRequest])
 
@@ -135,7 +135,7 @@ function RequestEntryForm(props:Props){
         let employeeFor:Employee = props.employees.find((emp:Employee) => emp.id===employeeId)!;
         
         if(title !== '' && descriptionOfProposal!=='' && companyFor!==null && companyFor !== undefined && employeeFor!==null && employeeFor !==undefined){
-            await props.onUpdate(new RequestForCooperation(props.selectedRowRequest!,title,descriptionOfProposal,new Date(),companyFor?companyFor:null,employeeFor?employeeFor:null));
+            await props.onUpdate(new RequestForCooperation(props.selectedRowRequest!,title,descriptionOfProposal,new Date(),new Company(companyId,[],[],"","",""),new Employee(employeeId,"","","",0)));
         }
     }
 
@@ -206,7 +206,7 @@ function RequestEntryForm(props:Props){
                 </FormControl>
                     
                 <Box display="flex" justifyContent="flex-end">
-                    <Button  color="primary" variant="contained" onClick={onAdd}>Dodaj zahtev</Button>
+                    <Button  color="primary" variant="contained" onClick={onAdd} disabled={props.selectedRowRequest!==null}>Dodaj zahtev</Button>
                 </Box>
 
                 <Box display="flex" justifyContent="flex-end">
