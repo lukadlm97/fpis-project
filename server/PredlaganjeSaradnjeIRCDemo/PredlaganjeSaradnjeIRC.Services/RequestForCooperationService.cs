@@ -161,7 +161,7 @@ namespace PredlaganjeSaradnjeIRC.Services
             Company tempCompany = new Company();
             Employee tempEmployee = new Employee();
 
-            if(company.Locations == null)
+            if(string.IsNullOrEmpty(company.Name))
             {
                 tempCompany = companyService.GetById(company.Id);
                 _context.Entry(tempCompany).State = EntityState.Detached;

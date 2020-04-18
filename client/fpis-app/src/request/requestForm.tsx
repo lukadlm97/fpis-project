@@ -5,6 +5,7 @@ import {RequestForCooperation} from '../model/RequestForCooperation'
 
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import DeleteIcon from '@material-ui/icons/Delete';
 import {useForm} from 'react-hook-form'
 import * as yup from 'yup'
 import useStyles from '../company/style'
@@ -168,7 +169,7 @@ function RequestEntryForm(props:Props){
              />
 
                 <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel id="demo-controlled-open-select-label">Grad odakle je kompanija</InputLabel>
+                        <InputLabel id="demo-controlled-open-select-label">Kompanija na koju se odnosi zahtev</InputLabel>
                         <Select
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
@@ -179,7 +180,7 @@ function RequestEntryForm(props:Props){
                         onChange={handleChange}
                         >
                             {props.companies.map((comp)=>(
-                            <MenuItem value={comp.id} key={comp.name}>
+                            <MenuItem value={comp.id} key={comp.id}>
                                 {comp.name}
                             </MenuItem>
                             ))}
@@ -187,7 +188,7 @@ function RequestEntryForm(props:Props){
                 </FormControl>
 
                 <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel id="demo-controlled-open-select-label">Grad odakle je kompanija</InputLabel>
+                        <InputLabel id="demo-controlled-open-select-label">Zaposleni koji podnosi zahtev</InputLabel>
                         <Select
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
@@ -204,18 +205,25 @@ function RequestEntryForm(props:Props){
                             ))}
                         </Select>
                 </FormControl>
-                    
+
+
+               
                 <Box display="flex" justifyContent="flex-end">
                     <Button  color="primary" variant="contained" onClick={onAdd} disabled={props.selectedRowRequest!==null}>Dodaj zahtev</Button>
-                </Box>
+            
 
-                <Box display="flex" justifyContent="flex-end">
+               
                     <Button  color="default" variant="contained" disabled={props.selectedRowRequest===null} onClick={onUpdate}>Sacuvaj izmene</Button>
-                </Box>
+ 
 
-                <Box display="flex" justifyContent="flex-end">
-                    <Button  color="secondary" variant="contained" disabled={props.selectedRowRequest===null} onClick={onRemove}>Obrisi zahtev</Button>
+               
+                    <Button  color="secondary" variant="contained" disabled={props.selectedRowRequest===null} onClick={onRemove}>
+                        <DeleteIcon style={{fontSize:20,color:"#727bb8"}} />
+                           {" "} Obrisi zahtev
+                    </Button>
+               
                 </Box>
+                    
 
             </form>
         </>
