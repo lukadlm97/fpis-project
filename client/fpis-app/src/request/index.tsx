@@ -30,7 +30,7 @@ function RequestController(props:Props){
                         setVisibleRequestForm={setVisibleRequestForm}
                         visibleRequestForm={visibleRequestForm}
                         />
-        {visibleRequestForm?<RequestEntryForm employees={props.employees}
+        {visibleRequestForm||props.selectedRowRequest!=null?<RequestEntryForm employees={props.employees}
                             companies={props.companies}
                             selectedRowRequest={props.selectedRowRequest}
                             onAdd={props.onAddRequest}

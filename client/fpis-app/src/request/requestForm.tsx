@@ -109,6 +109,7 @@ function RequestEntryForm(props:Props){
             setDescriptionOfProposal(req.descriptionOfProposal);
             setCompanyId(req.company?.id!)
             setEmployeeId(req.employee?.id!)
+            props.setVisibleRequestForm(false);
         }
     },[props.selectedRowRequest])
 
@@ -143,8 +144,7 @@ function RequestEntryForm(props:Props){
     }
 
 
-    const onBackAction = async(e:any) =>{
-        e.preventDefault();
+    const onBackAction = () =>{
         props.setVisibleRequestForm(false);
     }
 

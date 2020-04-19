@@ -46,8 +46,13 @@ function RequestTable(props:Props) {
     const bull = <span className={classes.bullet}>•</span>;
     
     const setSelectedRow = (id: number) => {
-        if (props.selectedRowRequest === id) props.setSelectedRowRequest(null);
-        else props.setSelectedRowRequest(id);
+        if (props.selectedRowRequest === id) {
+            props.setSelectedRowRequest(null);
+        }
+        else{
+            props.setVisibleRequestForm(true);
+             props.setSelectedRowRequest(id);
+        }
     }
 
     const onAddRequest = ()=>{

@@ -150,6 +150,7 @@ function App() {
       console.log(res)
       if(res.error)setError(res.error)
       setSelectedRowCompany(null)
+
     }catch(e){
       setError(e)
     }
@@ -167,6 +168,7 @@ function App() {
       if(res.error)setError(res.error)  
      // else setCompanies(companies.map((comp:CompanyModel)=>comp.id===companyId?))
       setSelectedRowCompany(null)
+      companies.map((comp:CompanyModel)=>comp.id===companyId?res:comp)
     }catch(e){
       setError(e)
     }
