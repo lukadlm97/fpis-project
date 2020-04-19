@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { RequestForCooperation as RequestForCooperationItem, RequestForCooperation} from '../model/RequestForCooperation';
 import {Company} from '../model/Company'
 import {Employee} from '../model/Employee'
@@ -20,20 +20,25 @@ interface Props{
 
 
 function RequestController(props:Props){
+    const [visibleRequestForm,setVisibleRequestForm]= useState(false)
+    
     return(
         <>
         <RequestTable requests={props.requests}
                         selectedRowRequest={props.selectedRowRequest}
                         setSelectedRowRequest={props.setSelectedRowRequest}
+                        setVisibleRequestForm={setVisibleRequestForm}
+                        visibleRequestForm={visibleRequestForm}
                         />
-        <RequestEntryForm employees={props.employees}
+        {visibleRequestForm?<RequestEntryForm employees={props.employees}
                             companies={props.companies}
                             selectedRowRequest={props.selectedRowRequest}
                             onAdd={props.onAddRequest}
                             onUpdate={props.onUpdateRequest}
                             onRemove={props.onRemoveRequest}
                             requests={props.requests}
-                            onAddMoreDescription={props.onAddMoreDescription}/>
+                            onAddMoreDescription={props.onAddMoreDescription}
+                            setVisibleRequestForm = {setVisibleRequestForm}/>:null}
         </>
     );
 }

@@ -18,6 +18,8 @@ interface Props{
     requests:RequestForCooperationItem[];
     selectedRowRequest:number|null;
     setSelectedRowRequest:(id:number|null)=>any;
+    setVisibleRequestForm:(visibleRequestForm:boolean)=>any;
+    visibleRequestForm:boolean;
 }
 
 const useStyles = makeStyles({
@@ -48,6 +50,9 @@ function RequestTable(props:Props) {
         else props.setSelectedRowRequest(id);
     }
 
+    const onAddRequest = ()=>{
+        props.setVisibleRequestForm(!props.visibleRequestForm)
+    }
     return(
         <>
             <h1>Stranica za zahteve za saradnju</h1>
@@ -94,6 +99,10 @@ function RequestTable(props:Props) {
                </Card>
             </Box>
             ))}
+
+            <Box display="flex" justifyContent="flex-end">
+                    <Button  color="primary" variant="contained" onClick={onAddRequest} disabled={props.selectedRowRequest!==null}>Dodaj zahtev</Button>
+            </Box>
         </>
     );
 }

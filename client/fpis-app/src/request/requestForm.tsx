@@ -15,8 +15,9 @@ import Select from '@material-ui/core/Select';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Box from '@material-ui/core/Box'
-
-
+import SaveIcon from '@material-ui/icons/Save';
+import BackspaceIcon from '@material-ui/icons/Backspace';
+import AddIcon from '@material-ui/icons/Add';
 interface Props{
     companies:Company[];
     employees: Employee[];
@@ -26,6 +27,7 @@ interface Props{
     onRemove:()=>Promise<any>;
     selectedRowRequest:number|null;
     onAddMoreDescription:(description:string)=>Promise<any>;
+    setVisibleRequestForm:(visibleRequestForm:boolean)=>any;
 }
 
 interface State{
@@ -140,6 +142,12 @@ function RequestEntryForm(props:Props){
         }
     }
 
+
+    const onBackAction = async(e:any) =>{
+        e.preventDefault();
+        props.setVisibleRequestForm(false);
+    }
+
     return(
         <>
             <form className={classes.formContainer}>
@@ -209,14 +217,23 @@ function RequestEntryForm(props:Props){
 
                
                 <Box display="flex" justifyContent="flex-end">
-                    <Button  color="primary" variant="contained" onClick={onAdd} disabled={props.selectedRowRequest!==null}>Dodaj zahtev</Button>
-            
+                    <Button  color="secondary" variant="contained" onClick={onBackAction} disabled={props.selectedRowRequest!==null}>
+                        <BackspaceIcon style={{fontSize:20,color:"#727bb8"}}/>
+                        {" "}
+                        Otkazi
+                    </Button>
+                        {" "}
 
-               
-                    <Button  color="default" variant="contained" disabled={props.selectedRowRequest===null} onClick={onUpdate}>Sacuvaj izmene</Button>
- 
-
-               
+                    <Button  color="primary" variant="contained" onClick={onAdd} disabled={props.selectedRowRequest!==null}>
+                        <AddIcon style={{fontSize:20,color:"#727bb8"}}/>
+                        {" "}Dodaj zahtev
+                    </Button>
+                    {" "}
+                    <Button  color="default" variant="contained" disabled={props.selectedRowRequest===null} onClick={onUpdate}>
+                        <SaveIcon style={{fontSize:20,color:"#727bb8"}}/>
+                        {" "}Sacuvaj izmene
+                    </Button>
+                    {" "}
                     <Button  color="secondary" variant="contained" disabled={props.selectedRowRequest===null} onClick={onRemove}>
                         <DeleteIcon style={{fontSize:20,color:"#727bb8"}} />
                            {" "} Obrisi zahtev
