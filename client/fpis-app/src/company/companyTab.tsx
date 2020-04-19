@@ -46,13 +46,14 @@ interface Props{
     companies:CompanyItem[];
     selectedRowCompany:number|null;
     setSelectedRowCompany:(id:number|null)=>any;
+    setVisibleCompanyForm:(visibleCompanyForm:boolean)=>any;
 }
 
 function Company(props:Props){
     const classes = useStyles();
 
     const setSelectedRow = (id: number) => {
-      if (props.selectedRowCompany === id) props.setSelectedRowCompany(null);
+      if (props.selectedRowCompany === id) {props.setSelectedRowCompany(null);props.setVisibleCompanyForm(false);}
       else props.setSelectedRowCompany(id);
     }
 
@@ -60,11 +61,6 @@ function Company(props:Props){
     return(
         <>
             <h1>Strana za kompanije</h1>
-              
-
-
-               
-
                 <TableContainer component={Paper}>
                     <Table  style={{border:'7px solid grey'}}
                             className={classes.table} 

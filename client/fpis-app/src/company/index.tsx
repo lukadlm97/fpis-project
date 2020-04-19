@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import CompanyEntryForm from './companyForm'
 import Company from './companyTab'
 import {City} from '../model/City'
@@ -23,23 +23,37 @@ interface Props{
 
 
 function CompanyController(props:Props){
+    const [visibleCompanyForm,setVisibleCompanyForm] = useState(false)
+    const [visibleContactForm,setVisibleContactForm] = useState(false)
+    const [visibleAddressForm,setVisibleAddressForm] = useState(false)
+
     return (
     <>
         <Company companies={props.companies}
                     selectedRowCompany={props.selectedRowCompany}
-                    setSelectedRowCompany={props.setSelectedRowCompany}/>
+                    setSelectedRowCompany={props.setSelectedRowCompany}
+                    setVisibleCompanyForm = {setVisibleCompanyForm}/>
         
         <Functionality onRemoveCompany={props.onRemoveCompany} 
-                        selectedRowCompany={props.selectedRowCompany}/>
+                        selectedRowCompany={props.selectedRowCompany}
+                        setVisibleCompanyForm={setVisibleCompanyForm}
+                        visibleCompanyForm={visibleCompanyForm}
+                        setVisibleContactForm={setVisibleContactForm}
+                        visibleContactForm={visibleContactForm}
+                        setVisibleAddressForm = {setVisibleAddressForm}
+                        visibleAddressForm={visibleAddressForm}/>
         
-        <CompanyEntryForm cities={props.cities}
-                            onAddCompany={props.onAddCompany}/>
-        <LocationForm cities={props.cities}
+       {visibleCompanyForm? <CompanyEntryForm cities={props.cities}
+                            onAddCompany={props.onAddCompany}
+                            setVisibleCompanyForm={setVisibleCompanyForm}/>:null}
+        {visibleAddressForm?<LocationForm cities={props.cities}
                         selectedRowCompany={props.selectedRowCompany}
                         onAddLocation={props.onAddLocation}
-                     />
-        <ContactForm selectedRowCompany={props.selectedRowCompany}
-                        onAddContact={props.onAddContact} />
+                        setVisibleAddressForm={setVisibleAddressForm}
+                     />:null}
+       {visibleContactForm? <ContactForm selectedRowCompany={props.selectedRowCompany}
+                        onAddContact={props.onAddContact}
+                        setVisibleContactForm={setVisibleContactForm} />:null}
 
     </>
     )

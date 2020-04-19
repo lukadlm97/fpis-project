@@ -17,6 +17,7 @@ import {ContactType} from '../model/enum/ContactType'
 interface Props{
     onAddContact:(contact:Contact,id:number|null)=>Promise<any>;
     selectedRowCompany:number|null;
+    setVisibleContactForm:(visibleCompanyForm:boolean)=>any;  
 }
 
 const ContactEntrySchema = yup.object().shape({
@@ -67,6 +68,9 @@ function ContactFrom(props:Props){
       setOpenContact(true);
     };
 
+    const BackAction = () =>{
+        props.setVisibleContactForm(false);
+    }
 
     return(
 
@@ -104,6 +108,8 @@ function ContactFrom(props:Props){
                 />
 
                 <Box display="flex" justifyContent="flex-end">
+                    <Button  color="secondary" variant="contained" onClick={BackAction}>Otkazi</Button>
+                    {"  "}
                     <Button type="submit" color="primary" variant="contained" >Dodaj novi kontakt</Button>
                 </Box>
         </form>

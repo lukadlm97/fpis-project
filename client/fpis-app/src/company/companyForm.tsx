@@ -74,6 +74,7 @@ const CompanyEntrySchema = yup.object().shape({
 interface Props{
     cities:City[],
     onAddCompany:(company:Company)=>Promise<any>;
+    setVisibleCompanyForm:(visibleCompanyForm:boolean)=>any;  
 }
 
 interface State{
@@ -130,6 +131,10 @@ function CompanyEntryForm (props:Props){
       const handleOpenContact = () => {
         setOpenContact(true);
       };
+
+      const BackAction = () =>{         
+          props.setVisibleCompanyForm(false);
+      }
 
     return(
         <>
@@ -235,6 +240,8 @@ function CompanyEntryForm (props:Props){
 
 
                 <Box display="flex" justifyContent="flex-end">
+                <Button color="secondary" variant="contained" onClick={BackAction}>Otkazi</Button>
+                {"  "}
                     <Button type="submit" color="primary" variant="contained" >Dodaj kompaniju</Button>
                 </Box>
             </form>

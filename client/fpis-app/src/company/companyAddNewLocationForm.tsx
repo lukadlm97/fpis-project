@@ -17,6 +17,7 @@ interface Props{
     cities:City[];
     selectedRowCompany:number|null;
     onAddLocation:(location:Location,id:number|null)=>Promise<any>;
+    setVisibleAddressForm:(visibleCompanyForm:boolean)=>any;  
 }
 
 const LocationEntrySchema = yup.object().shape({
@@ -74,6 +75,9 @@ function LocationForm(props:Props){
         reset()
     }
 
+    const onBackAction = ()=>{
+        props.setVisibleAddressForm(false);
+    }
 
 
     return(
@@ -137,6 +141,8 @@ function LocationForm(props:Props){
                 </FormControl>
 
                 <Box display="flex" justifyContent="flex-end">
+                    <Button  color="secondary" variant="contained" onClick={onBackAction}>Otkazi</Button>
+                    {"  "}
                     <Button type="submit" color="primary" variant="contained" >Dodaj novu adresu</Button>
                 </Box>
         </form>
