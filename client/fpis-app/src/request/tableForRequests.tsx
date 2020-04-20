@@ -13,6 +13,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Loading from '../universal_components/loading'
 import Box from '@material-ui/core/Box'
+import Moment from 'react-moment';
+import moment from 'moment';
 
 interface Props{
     requests:RequestForCooperationItem[];
@@ -58,6 +60,9 @@ function RequestTable(props:Props) {
     const onAddRequest = ()=>{
         props.setVisibleRequestForm(!props.visibleRequestForm)
     }
+
+
+
     return(
         <>
             <h1>Stranica za zahteve za saradnju</h1>
@@ -73,7 +78,9 @@ function RequestTable(props:Props) {
                                    style={{fontSize:15,color:"#727bb8"}}
                                    />
                                      {" "}
-                                   {request.date}
+                                     <div>
+                                         {moment(request.date).format('DD-MM-YYYY')}
+                                     </div>
                                </Box>
                            </Typography>
                            <Typography variant="h5" component="h2">

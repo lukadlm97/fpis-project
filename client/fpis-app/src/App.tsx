@@ -169,7 +169,7 @@ function App() {
      // else setCompanies(companies.map((comp:CompanyModel)=>comp.id===companyId?))
       setSelectedRowCompany(null)
       console.log(res)
-      companies.map((comp:CompanyModel)=>comp.id===res.id?res:comp)
+      setCompanies(companies.map((comp:CompanyModel)=>comp.id===res.id?res:comp));
     }catch(e){
       setError(e)
     }
@@ -272,7 +272,8 @@ function App() {
                                                                                           onUpdateRequest={onUpdateRequest}
                                                                                           onAddMoreDescription={onAddMoreDescription}
                                                                                           onRemoveRequest={onRemoveRequest} />} />
-                        <Route exact path="/contact" component={()=> <Contact contacts={contacts} />}/>
+                        <Route exact path="/contact" component={()=> <Contact contacts={contacts}
+                                                                                companies={companies} />}/>
                         <Redirect to="/"/>
                     </Switch>
                 </Container>
