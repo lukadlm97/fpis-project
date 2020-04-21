@@ -242,7 +242,7 @@ function App() {
                         style={{fontSize:40,color:"#161824"}}/>
                         Zahtevi
                     </Button>
-                    <Button component={Link} to="/contacts">
+                    <Button component={Link} to="/contact">
                         <ContactMailIcon color="action"
                         style={{fontSize:40,color:"#161824"}}/>
                         Kontakti

@@ -12,6 +12,7 @@ function Contact(props:Props){
     return(
         <>
             <h1>Stranica za kontakte</h1>
+            <TableContacts contacts={props.contacts} />
            </>
     );
 }
