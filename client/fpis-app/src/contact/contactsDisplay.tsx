@@ -58,7 +58,7 @@ function TableContacts(props:Props){
                 id="panel1bh-header"
                 >
                 <Typography className={classes.heading}>Emailovi:</Typography>
-                <Typography className={classes.secondaryHeading}><EmailIcon/></Typography>
+                <Typography className={classes.secondaryHeading}><EmailIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                 <Typography>
@@ -76,7 +76,7 @@ function TableContacts(props:Props){
                 id="panel2bh-header"
                 >
                 <Typography className={classes.heading}>Facebook:</Typography>
-                <Typography className={classes.secondaryHeading}><FacebookIcon/> </Typography>
+                <Typography className={classes.secondaryHeading}><FacebookIcon style={{color : '#727bb8'}}/> </Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                 <Typography>
@@ -95,7 +95,7 @@ function TableContacts(props:Props){
                 id="panel3bh-header"
                 >
                 <Typography className={classes.heading}>Instagram:</Typography>
-                <Typography className={classes.secondaryHeading}><InstagramIcon/></Typography>
+                <Typography className={classes.secondaryHeading}><InstagramIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                 <Typography>
@@ -113,7 +113,7 @@ function TableContacts(props:Props){
                 id="panel4bh-header"
                 >
                 <Typography className={classes.heading}>Twitter:</Typography>
-                <Typography className={classes.secondaryHeading}><TwitterIcon/></Typography>
+                <Typography className={classes.secondaryHeading}><TwitterIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                 <Typography>
@@ -131,7 +131,7 @@ function TableContacts(props:Props){
                 id="panel5bh-header"
                 >
                 <Typography className={classes.heading}>Fax:</Typography>
-                <Typography className={classes.secondaryHeading}><PrintIcon/></Typography>
+                <Typography className={classes.secondaryHeading}><PrintIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                 <Typography>
@@ -149,7 +149,7 @@ function TableContacts(props:Props){
                 id="panel6bh-header"
                 >
                 <Typography className={classes.heading}>Mobilni telefon:</Typography>
-                <Typography className={classes.secondaryHeading}><PhoneIphoneIcon/></Typography>
+                <Typography className={classes.secondaryHeading}><PhoneIphoneIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                 <Typography>
@@ -167,7 +167,7 @@ function TableContacts(props:Props){
                 id="panel7bh-header"
                 >
                 <Typography className={classes.heading}>Fiksni telefon:</Typography>
-                <Typography className={classes.secondaryHeading}><PhoneIcon/></Typography>
+                <Typography className={classes.secondaryHeading}><PhoneIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                 <Typography>

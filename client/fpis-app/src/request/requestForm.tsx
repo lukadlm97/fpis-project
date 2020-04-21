@@ -216,7 +216,7 @@ function RequestEntryForm(props:Props){
 
 
                
-                <Box display="flex" justifyContent="flex-end">
+                <Box ml={5} pl={2} mt={4} mb={4} justifyContent>
                     <Button  color="secondary" variant="contained" onClick={onBackAction} disabled={props.selectedRowRequest!==null}>
                         <BackspaceIcon style={{fontSize:20,color:"#727bb8"}}/>
                         {" "}
