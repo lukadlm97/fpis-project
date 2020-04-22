@@ -11,6 +11,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles, Theme, createStyles} from '@material-ui/core/styles';
+import { Contact } from '../model/Contact';
+import { ContactType } from '../model/enum/ContactType';
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -47,6 +49,14 @@ interface Props{
     selectedRowCompany:number|null;
     setSelectedRowCompany:(id:number|null)=>any;
     setVisibleCompanyForm:(visibleCompanyForm:boolean)=>any;
+}
+
+const getEmail = (contacts:Contact[])=>{
+    const emails = contacts.filter(contact => contact.contactType===ContactType.Email);
+    if(emails.length === 0){
+      return null;
+    }
+    return emails[emails.length-1];
 }
 
 function Company(props:Props){
@@ -95,7 +105,9 @@ function Company(props:Props){
                                 {company.locations.length===0?"Kompanija nema lokaciju":company.locations[company.locations.length-1].streetName}  
                                 </StyledTableCell>
                                 <StyledTableCell>
-                                {company.contacts.length===0?"Kompanija nema kontakte":company.contacts[company.contacts.length-1].content}
+                                {
+                                 getEmail(company.contacts)===null?"Kompanija nema mail":getEmail(company.contacts)?.content
+                                }
                                 </StyledTableCell>
                                 </StyledTableRow>
                             ))}
