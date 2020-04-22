@@ -60,7 +60,7 @@ function Company(props:Props){
 
     return(
         <>
-            <h1>Strana za kompanije</h1>
+            
                 <TableContainer component={Paper}>
                     <Table  style={{border:'7px solid grey'}}
                             className={classes.table} 

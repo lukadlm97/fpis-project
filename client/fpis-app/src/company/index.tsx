@@ -49,6 +49,7 @@ function CompanyController(props:Props){
 
     return (
     <>
+        <h1>Strana za kompanije</h1>
         <SearchForm getSearch={getSearch} updateSearch={updateSearch}/>   
         <Company companies={filteredCompanies}
                     selectedRowCompany={props.selectedRowCompany}
