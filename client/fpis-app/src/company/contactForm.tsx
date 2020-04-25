@@ -86,13 +86,15 @@ function ContactFrom(props:Props){
                         value={contact}
                         onChange={handleChangeContact}
                         >
-                            {Object.keys(ContactType).map(key =>(
-                            <MenuItem value={key} key={key}>
-                                {(key:number)=>(
-                                    ContactType[key]
-                                    )!}
-                            </MenuItem>
-                            ))}
+                            {
+                                Object.keys(ContactType)
+                                            .filter(a=>parseInt(a,10)>=0)
+                                            .map((a:any)=>(
+                                            <MenuItem value={a} key={a}>
+                                                {ContactType[a]}
+                                            </MenuItem> 
+                                            ))
+                            }
                           
                         </Select>
                 </FormControl>
