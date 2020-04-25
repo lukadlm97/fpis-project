@@ -23,7 +23,7 @@ interface Props{
     employees: Employee[];
     requests:RequestForCooperation[];
     onAdd:(request:RequestForCooperation)=>Promise<any>;
-    onUpdate:(request:RequestForCooperation)=>Promise<any>;
+    onUpdate:(request:RequestForCooperation,id:number)=>Promise<any>;
     onRemove:()=>Promise<any>;
     selectedRowRequest:number|null;
     onAddMoreDescription:(description:string)=>Promise<any>;
@@ -139,7 +139,7 @@ function RequestEntryForm(props:Props){
         let employeeFor:Employee = props.employees.find((emp:Employee) => emp.id===employeeId)!;
         
         if(title !== '' && descriptionOfProposal!=='' && companyFor!==null && companyFor !== undefined && employeeFor!==null && employeeFor !==undefined){
-            await props.onUpdate(new RequestForCooperation(props.selectedRowRequest!,title,descriptionOfProposal,new Date(),new Company(companyId,[],[],"","",""),new Employee(employeeId,"","","",0)));
+            await props.onUpdate(new RequestForCooperation(props.selectedRowRequest!,title,descriptionOfProposal,new Date(),new Company(companyId,[],[],"","",""),new Employee(employeeId,"","","",0)),companyId);
         }
     }
 

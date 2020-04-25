@@ -150,7 +150,7 @@ function App() {
       console.log(res)
       if(res.error)setError(res.error)
       setSelectedRowCompany(null)
-
+      setCompanies(companies.map((comp:CompanyModel)=>comp.id===res.id?res:comp));
     }catch(e){
       setError(e)
     }
@@ -175,12 +175,17 @@ function App() {
     }
   }
 
-  const onUpdateRequest = async(request:RequestForCooperationModel)=>{
+  const onUpdateRequest = async(request:RequestForCooperationModel,id:number)=>{
     try{
+      
       let res = await updateRequest(request);
       setSelectedRowRequest(null)
       if(res.error)setError(res.error)
-      else setRequests(requests.map((req:RequestForCooperationModel)=>req.id===request.id?request:req));
+      else {
+          
+          request.company = companies.find(comp=>comp.id===id)!
+          setRequests(requests.map((req:RequestForCooperationModel)=>req.id===request.id?request:req));
+      }
     }catch(e){
       setError("Network error")
     }

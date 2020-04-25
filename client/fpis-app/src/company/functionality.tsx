@@ -45,7 +45,7 @@ function Functionality(props:Props){
 
     return(
         <Box ml={5} pl={2} mt={4} mb={4} justifyContent>
-                <Button disabled={props.visibleCompanyForm && !props.selectedRowCompany} variant="contained" color="default" onClick={onVisibleEntryForm}>
+                <Button disabled={props.visibleCompanyForm || !(!props.selectedRowCompany)} variant="contained" color="default" onClick={onVisibleEntryForm}>
                     <AddIcon style={{fontSize:20,color:"#727bb8"}} />
                     Dodaj kompaniju
                 </Button>

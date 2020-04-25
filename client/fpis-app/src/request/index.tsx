@@ -14,7 +14,7 @@ interface Props{
     setSelectedRowRequest:(id:number|null)=>any;
     onAddRequest:(request:RequestForCooperationItem)=>Promise<any>;
     onRemoveRequest:()=>Promise<any>;
-    onUpdateRequest:(request:RequestForCooperationItem)=>Promise<any>;
+    onUpdateRequest:(request:RequestForCooperationItem,id:number)=>Promise<any>;
     onAddMoreDescription:(description:string)=>Promise<any>;
 }
 
