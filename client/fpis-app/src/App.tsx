@@ -112,9 +112,11 @@ function App() {
 
   const onAddRequest = async(request:RequestForCooperationModel)=>{
     try{
+      setLoading(true);
       let res = await addNewRequest(request)
       if(res.error)setError(res.error)
       else setRequests([...requests,{...res}]);
+      setLoading(false);
     }catch(e){
       setError('Network error')
     }
@@ -135,10 +137,12 @@ function App() {
 
   const onRemoveRequest = async()=>{
     try{
+      setLoading(true);
       const requestId = selectedRowRequest!;
       await removeRequest(requestId);
       setSelectedRowRequest(null)
       setRequests(requests.filter((request:RequestForCooperationModel)=>request.id!==requestId));
+      setLoading(false);
     }catch(e){
       setError('Network error')
     }
@@ -186,7 +190,7 @@ function App() {
 
   const onUpdateRequest = async(request:RequestForCooperationModel,id:number)=>{
     try{
-      
+      setLoading(true);
       let res = await updateRequest(request);
       setSelectedRowRequest(null)
       if(res.error)setError(res.error)
@@ -195,6 +199,7 @@ function App() {
           request.company = companies.find(comp=>comp.id===id)!
           setRequests(requests.map((req:RequestForCooperationModel)=>req.id===request.id?request:req));
       }
+      setLoading(false);
     }catch(e){
       setError("Network error")
     }
@@ -279,6 +284,7 @@ function App() {
                                                                                 loading={loading}
                                                                                 />}/>
                         <Route exact path="/request" component={() => <RequestController requests={requests}
+                                                                                          loading={loading}
                                                                                           companies={companies}
                                                                                           employees={employees}
                                                                                           selectedRowRequest={selectedRowRequest}
