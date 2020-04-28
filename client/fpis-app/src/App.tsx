@@ -56,6 +56,7 @@ function App() {
   let [selectedRowCompany,setSelectedRowCompany] = useState<number|null>(null) 
   let [selectedRowRequest,setSelectedRowRequest] = useState<number|null>(null) 
   let [employees,setEmployees] = useState<Employee[]>([]);
+  let [loading,setLoading] = useState(false); 
 
   const getContacts = async()=>{
     try{
@@ -99,9 +100,11 @@ function App() {
 
   const onAddCompany = async(company:CompanyModel)=>{
     try{
+      setLoading(true);
       let res = await addNewCompany(company)
       if(res.error)setError(res.error)
       else setCompanies([...companies,{...res}]);
+      setLoading(false);
     }catch(e){
       setError('Network error')
     }
@@ -119,10 +122,12 @@ function App() {
 
   const onRemoveCompany = async() =>{
     try{
+      setLoading(true);
       const companyId = selectedRowCompany!;
       await removeCompany(companyId);
       setCompanies(companies.filter((company:CompanyModel)=>company.id!==companyId));
-      setSelectedRowCompany(null)
+      setSelectedRowCompany(null);
+      setLoading(false);
     }catch(e){
       setError("Network error");
     }
@@ -141,6 +146,7 @@ function App() {
 
   const onAddNewContact = async(contact:ContactModel) =>{
     try{
+      setLoading(true);
       if(selectedRowCompany===null){
         setError("Morate odabrati kompaniju!")
         return;
@@ -151,6 +157,7 @@ function App() {
       if(res.error)setError(res.error)
       setSelectedRowCompany(null)
       setCompanies(companies.map((comp:CompanyModel)=>comp.id===res.id?res:comp));
+      setLoading(false);
     }catch(e){
       setError(e)
     }
@@ -158,6 +165,7 @@ function App() {
   
   const onAddNewLocation = async(location:Location)=>{
     try{
+      setLoading(true);
       if(selectedRowCompany===null){
         setError("Morate odabrati kompaniju!")
         return;
@@ -170,6 +178,7 @@ function App() {
       setSelectedRowCompany(null)
       console.log(res)
       setCompanies(companies.map((comp:CompanyModel)=>comp.id===res.id?res:comp));
+      setLoading(false);
     }catch(e){
       setError(e)
     }
@@ -267,6 +276,7 @@ function App() {
                                                                                 onRemoveCompany={onRemoveCompany}
                                                                                 onAddContact={onAddNewContact}
                                                                                 onAddLocation={onAddNewLocation}
+                                                                                loading={loading}
                                                                                 />}/>
                         <Route exact path="/request" component={() => <RequestController requests={requests}
                                                                                           companies={companies}

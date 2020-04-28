@@ -16,6 +16,7 @@ interface Props{
     cities:City[];
     companies:CompanyModel[];
     selectedRowCompany:number|null;
+    loading:boolean;
     setSelectedRowCompany:(id:number|null)=>any;
     onAddCompany:(company:CompanyModel)=>Promise<any>;
     onRemoveCompany:()=>Promise<any>;
@@ -59,9 +60,9 @@ function CompanyController(props:Props){
                     setVisibleCompanyForm = {setVisibleCompanyForm}/>
         
         <div className={classes.root}>
-            {props.companies.length===0?<CircularProgress/>:null}
+            {props.companies.length===0||props.loading?<CircularProgress/>:null}
         </div>
-        
+
         <Functionality onRemoveCompany={props.onRemoveCompany} 
                         selectedRowCompany={props.selectedRowCompany}
                         setVisibleCompanyForm={setVisibleCompanyForm}
