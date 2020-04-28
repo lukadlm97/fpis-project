@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
+
 
 import {ContactType} from '../model/enum/ContactType'
 import {Contact} from '../model/Contact'
@@ -107,6 +108,7 @@ function CompanyEntryForm (props:Props){
     const [city, setCity] = React.useState(0);
     const [contact,setContact] = React.useState(0)
     const [openContact,setOpenContact] = React.useState(false)
+   
 
     const handleClose = () => {
         setOpen(false);
@@ -186,6 +188,7 @@ function CompanyEntryForm (props:Props){
                 helperText={errors.locations?errors.locations.values:''}
                 />
 
+
                 <FormControl fullWidth className={classes.formControl}>
                         <InputLabel id="demo-controlled-open-select-label">Grad odakle je kompanija</InputLabel>
                         <Select
@@ -199,12 +202,16 @@ function CompanyEntryForm (props:Props){
                         defaultValue = {props.cities[1]}
                         >
                             {props.cities.map((cityM)=>(
+                            
                             <MenuItem value={cityM.id} key={cityM.name}>
                                 {cityM.name}
                             </MenuItem>
                             ))}
                         </Select>
                 </FormControl>
+
+              
+
 
                 <FormControl fullWidth className={classes.formControl}>
                         <InputLabel id="demo-controlled-open-select-label">Vrsta kontakta</InputLabel>

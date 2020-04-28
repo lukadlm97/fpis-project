@@ -9,7 +9,8 @@ import { Contact } from '../model/Contact'
 import {Location} from '../model/Location'
 import ContactForm from './contactForm'
 import SearchForm from './searchForm'
-
+import CircularProgress from '@material-ui/core/CircularProgress';
+import useStyles from './style'
 
 interface Props{
     cities:City[];
@@ -29,6 +30,7 @@ function CompanyController(props:Props){
     const [visibleAddressForm,setVisibleAddressForm] = useState(false)
     const [filteredCompanies,setFilteredCompanies] = useState(props.companies)
     const [search,setSearch] = useState('');
+    const classes = useStyles();
 
     const getCompanies = async()=>{
         setFilteredCompanies(props.companies.filter(comp=>comp.name.includes(search)||comp.locations[comp.locations.length-1].city.name.includes(search)));
@@ -56,6 +58,10 @@ function CompanyController(props:Props){
                     setSelectedRowCompany={props.setSelectedRowCompany}
                     setVisibleCompanyForm = {setVisibleCompanyForm}/>
         
+        <div className={classes.root}>
+            {props.companies.length===0?<CircularProgress/>:null}
+        </div>
+        
         <Functionality onRemoveCompany={props.onRemoveCompany} 
                         selectedRowCompany={props.selectedRowCompany}
                         setVisibleCompanyForm={setVisibleCompanyForm}
@@ -64,7 +70,6 @@ function CompanyController(props:Props){
                         visibleContactForm={visibleContactForm}
                         setVisibleAddressForm = {setVisibleAddressForm}
                         visibleAddressForm={visibleAddressForm}/>
-        
        {visibleCompanyForm? <CompanyEntryForm cities={props.cities}
                             onAddCompany={props.onAddCompany}
                             setVisibleCompanyForm={setVisibleCompanyForm}/>:null}

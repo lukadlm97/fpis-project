@@ -16,4 +16,11 @@ export default makeStyles((theme: Theme) =>createStyles({
                 margin: theme.spacing(1),
                 minWidth: 120,
               },
+              root: {
+                display: 'flex',
+                '& > * + *': {
+                  marginLeft: theme.spacing(2),
+                },
+                justifyContent: 'center'
+              },
 }));
