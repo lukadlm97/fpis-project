@@ -14,12 +14,20 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import PrintIcon from '@material-ui/icons/Print';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import PhoneIcon from '@material-ui/icons/Phone';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
+    },
+    root1:{
+        display: 'flex',
+        '& > * + *': {
+          marginLeft: theme.spacing(2),
+        },
+        justifyContent: 'center'
     },
     heading: {
       fontSize: theme.typography.pxToRem(15),
@@ -47,6 +55,7 @@ function TableContacts(props:Props){
         const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
             setExpanded(isExpanded ? panel : false);
         };
+   
 
     return(
         <>
@@ -61,12 +70,20 @@ function TableContacts(props:Props){
                 <Typography className={classes.secondaryHeading}><EmailIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
+                {props.contacts.length===0?
+                <div className={classes.root1}>
+                    <CircularProgress/>
+                </div>
+                :
                 <Typography>
-                    {props.contacts.map(cont=>{
+                {
+                   props.contacts.map(cont=>{
                     if(cont.contactType===ContactType.Email)
                         return(<h4>{cont.content}</h4>)
-                    })}
+                    })
+                }
                 </Typography>
+                }
                 </ExpansionPanelDetails>
             </ExpansionPanel>
             <ExpansionPanel expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
@@ -79,12 +96,18 @@ function TableContacts(props:Props){
                 <Typography className={classes.secondaryHeading}><FacebookIcon style={{color : '#727bb8'}}/> </Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
+                {props.contacts.length===0?
+                <div className={classes.root1}>
+                    <CircularProgress/>
+                </div>
+                :
                 <Typography>
                     {props.contacts.map(cont=>{
                     if(cont.contactType===ContactType.Facebook)
                         return(<h4>{cont.content}</h4>)
                     })}
                 </Typography>
+                }
                 </ExpansionPanelDetails>
             </ExpansionPanel>
 
@@ -98,12 +121,18 @@ function TableContacts(props:Props){
                 <Typography className={classes.secondaryHeading}><InstagramIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
+                {props.contacts.length===0?
+                <div className={classes.root1}>
+                    <CircularProgress/>
+                </div>
+                :
                 <Typography>
                     {props.contacts.map(cont=>{
                     if(cont.contactType===ContactType.Instagram)
                         return(<h4>{cont.content}</h4>)
                     })}
                 </Typography>
+                }
                 </ExpansionPanelDetails>
             </ExpansionPanel>
             <ExpansionPanel expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
@@ -116,12 +145,18 @@ function TableContacts(props:Props){
                 <Typography className={classes.secondaryHeading}><TwitterIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
+                {props.contacts.length===0?
+                <div className={classes.root1}>
+                    <CircularProgress/>
+                </div>
+                :
                 <Typography>
                     {props.contacts.map(cont=>{
                     if(cont.contactType===ContactType.Twitter)
                         return(<h4>{cont.content}</h4>)
                     })}
                 </Typography>
+                }
                 </ExpansionPanelDetails>
             </ExpansionPanel>
             <ExpansionPanel expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
@@ -134,12 +169,18 @@ function TableContacts(props:Props){
                 <Typography className={classes.secondaryHeading}><PrintIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
+                {props.contacts.length===0?
+                <div className={classes.root1}>
+                    <CircularProgress/>
+                </div>
+                :
                 <Typography>
                     {props.contacts.map(cont=>{
                     if(cont.contactType===ContactType.Fax)
                         return(<h4>{cont.content}</h4>)
                     })}
                 </Typography>
+                }
                 </ExpansionPanelDetails>
             </ExpansionPanel>
             <ExpansionPanel expanded={expanded === 'panel6'} onChange={handleChange('panel6')}>
@@ -152,12 +193,18 @@ function TableContacts(props:Props){
                 <Typography className={classes.secondaryHeading}><PhoneIphoneIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
+                {props.contacts.length===0?
+                <div className={classes.root1}>
+                    <CircularProgress/>
+                </div>
+                :
                 <Typography>
                     {props.contacts.map(cont=>{
                     if(cont.contactType===ContactType.MobilePhone)
                         return(<h4>{cont.content}</h4>)
                     })}
                 </Typography>
+                }
                 </ExpansionPanelDetails>
             </ExpansionPanel>
             <ExpansionPanel expanded={expanded === 'panel7'} onChange={handleChange('panel7')}>
@@ -170,12 +217,18 @@ function TableContacts(props:Props){
                 <Typography className={classes.secondaryHeading}><PhoneIcon style={{color : '#727bb8'}}/></Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
+                {props.contacts.length===0?
+                <div className={classes.root1}>
+                    <CircularProgress/>
+                </div>
+                :
                 <Typography>
                     {props.contacts.map(cont=>{
                     if(cont.contactType===ContactType.Phone)
                         return(<h4>{cont.content}</h4>)
                     })}
                 </Typography>
+                }
                 </ExpansionPanelDetails>
             </ExpansionPanel>
             </div>
