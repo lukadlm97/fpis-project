@@ -49,6 +49,7 @@ interface Props{
     selectedRowCompany:number|null;
     setSelectedRowCompany:(id:number|null)=>any;
     setVisibleCompanyForm:(visibleCompanyForm:boolean)=>any;
+    scrolToForm:()=>any;
 }
 
 const getEmail = (contacts:Contact[])=>{
@@ -63,8 +64,16 @@ function Company(props:Props){
     const classes = useStyles();
 
     const setSelectedRow = (id: number) => {
-      if (props.selectedRowCompany === id) {props.setSelectedRowCompany(null);props.setVisibleCompanyForm(false);}
-      else props.setSelectedRowCompany(id);
+      if (props.selectedRowCompany === id)
+      {
+         props.setSelectedRowCompany(null);
+         props.setVisibleCompanyForm(false);
+      }
+      else 
+      {
+        props.setSelectedRowCompany(id);
+        props.scrolToForm();
+      }
     }
 
 

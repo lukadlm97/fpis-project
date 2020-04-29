@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect,useRef} from 'react'
 import CompanyEntryForm from './companyForm'
 import Company from './companyTab'
 import {City} from '../model/City'
@@ -23,6 +23,8 @@ interface Props{
     onAddContact:(contact:Contact,id:number|null)=>Promise<any>;
     onAddLocation:(location:Location,id:number|null)=>Promise<any>
 }
+
+const scrollToRef = (ref:any)=>window.scrollTo(0,ref.current.offsetTop);
 
 
 function CompanyController(props:Props){
@@ -50,6 +52,9 @@ function CompanyController(props:Props){
         setSearch('')
     }
 
+    const executeScroll = () =>scrollToRef(myRef)
+    const myRef = useRef(null);
+
     return (
     <>
         <h1>Strana za kompanije</h1>
@@ -57,7 +62,8 @@ function CompanyController(props:Props){
         <Company companies={filteredCompanies}
                     selectedRowCompany={props.selectedRowCompany}
                     setSelectedRowCompany={props.setSelectedRowCompany}
-                    setVisibleCompanyForm = {setVisibleCompanyForm}/>
+                    setVisibleCompanyForm = {setVisibleCompanyForm}
+                    scrolToForm={executeScroll}/>
         
         <div className={classes.root}>
             {props.companies.length===0||props.loading?<CircularProgress/>:null}
@@ -82,7 +88,8 @@ function CompanyController(props:Props){
        {visibleContactForm? <ContactForm selectedRowCompany={props.selectedRowCompany}
                         onAddContact={props.onAddContact}
                         setVisibleContactForm={setVisibleContactForm} />:null}
-
+        <div ref={myRef}>
+        </div>
     </>
     )
 }
