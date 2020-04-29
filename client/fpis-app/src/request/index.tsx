@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useRef} from 'react'
 import { RequestForCooperation as RequestForCooperationItem, RequestForCooperation} from '../model/RequestForCooperation';
 import {Company} from '../model/Company'
 import {Employee} from '../model/Employee'
@@ -21,10 +21,14 @@ interface Props{
     onAddMoreDescription:(description:string)=>Promise<any>;
 }
 
+const scrollToRef = (ref:any)=>window.scrollTo(0,ref.current.offsetTop);
+
 
 function RequestController(props:Props){
     const [visibleRequestForm,setVisibleRequestForm]= useState(false)
     const classes = useStyles();
+    const executeScroll = () =>scrollToRef(myRef)
+    const myRef = useRef(null);
 
     return(
         <>
@@ -33,7 +37,7 @@ function RequestController(props:Props){
                         setSelectedRowRequest={props.setSelectedRowRequest}
                         setVisibleRequestForm={setVisibleRequestForm}
                         visibleRequestForm={visibleRequestForm}
-                        />
+                        scrollToForm={executeScroll}/>
                         
         <div className={classes.root}>
             {props.requests.length===0?<CircularProgress/>
@@ -48,6 +52,8 @@ function RequestController(props:Props){
                             requests={props.requests}
                             onAddMoreDescription={props.onAddMoreDescription}
                             setVisibleRequestForm = {setVisibleRequestForm}/>:null}
+        <div ref={myRef}>
+        </div>
         </>
     );
 }

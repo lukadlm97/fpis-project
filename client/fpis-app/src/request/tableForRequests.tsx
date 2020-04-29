@@ -22,6 +22,7 @@ interface Props{
     setSelectedRowRequest:(id:number|null)=>any;
     setVisibleRequestForm:(visibleRequestForm:boolean)=>any;
     visibleRequestForm:boolean;
+    scrollToForm:()=>any;
 }
 
 const useStyles = makeStyles({
@@ -42,14 +43,13 @@ const useStyles = makeStyles({
   });
 
 
- const scrollToRef = (ref:any)=>window.scrollTo(0,ref.current.offsetTop);
 
 function RequestTable(props:Props) {
 
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
-    const myRef = useRef(null);
-    const executeScroll = () =>scrollToRef(myRef)
+ 
+    
 
     const setSelectedRow = (id: number) => {
         if (props.selectedRowRequest === id) {
@@ -57,7 +57,8 @@ function RequestTable(props:Props) {
         }
         else{
             props.setVisibleRequestForm(true);
-             props.setSelectedRowRequest(id);
+            props.setSelectedRowRequest(id);
+            props.scrollToForm()
         }
     }
 
@@ -110,7 +111,7 @@ function RequestTable(props:Props) {
                            </Typography>
                        </CardContent>
                            <CardActions>
-                               <Button size="small" onClick={function(event){setSelectedRow(request.id);executeScroll()}}>Detaljnije</Button>
+                               <Button size="small" onClick={()=>setSelectedRow(request.id)}>Detaljnije</Button>
                            </CardActions>
                </Card>
             </Box>
@@ -119,9 +120,7 @@ function RequestTable(props:Props) {
             <Box display="flex" justifyContent="flex-end">
                     <Button  color="primary" variant="contained" onClick={onAddRequest} disabled={props.selectedRowRequest!==null}>Dodaj zahtev</Button>
             </Box>
-            <div ref={myRef}>
-
-            </div>
+            
         </>
     );
 }
