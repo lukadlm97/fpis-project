@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useRef} from 'react'
 import { RequestForCooperation as RequestForCooperationItem} from '../model/RequestForCooperation';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import TitleIcon from '@material-ui/icons/Title';
@@ -42,11 +42,15 @@ const useStyles = makeStyles({
   });
 
 
+ const scrollToRef = (ref:any)=>window.scrollTo(0,ref.current.offsetTop);
+
 function RequestTable(props:Props) {
 
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
-    
+    const myRef = useRef(null);
+    const executeScroll = () =>scrollToRef(myRef)
+
     const setSelectedRow = (id: number) => {
         if (props.selectedRowRequest === id) {
             props.setSelectedRowRequest(null);
@@ -106,7 +110,7 @@ function RequestTable(props:Props) {
                            </Typography>
                        </CardContent>
                            <CardActions>
-                               <Button size="small" onClick={()=>setSelectedRow(request.id)}>Detaljnije</Button>
+                               <Button size="small" onClick={function(event){setSelectedRow(request.id);executeScroll()}}>Detaljnije</Button>
                            </CardActions>
                </Card>
             </Box>
@@ -115,6 +119,9 @@ function RequestTable(props:Props) {
             <Box display="flex" justifyContent="flex-end">
                     <Button  color="primary" variant="contained" onClick={onAddRequest} disabled={props.selectedRowRequest!==null}>Dodaj zahtev</Button>
             </Box>
+            <div ref={myRef}>
+
+            </div>
         </>
     );
 }
