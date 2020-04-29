@@ -69,6 +69,7 @@ function App() {
   const getCompanies = async()=>{
     try{
       setCompanies(await getAllCompanies())
+      companies.sort((a,b)=>(a.name>b.name)?1:-1);
     }catch(e){
       console.log(e)
     }
@@ -85,6 +86,7 @@ function App() {
   const getCities = async()=>{
     try{
       setCities(await getAllCities())
+      cities.sort((a,b)=>(a.name>b.name)?1:-1);
     }catch(e){
       console.log(e)
     }
