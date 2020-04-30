@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
-
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import {ContactType} from '../model/enum/ContactType'
 import {Contact} from '../model/Contact'
@@ -210,7 +210,7 @@ function CompanyEntryForm (props:Props){
                         </Select>
                 </FormControl>
 
-              
+                
 
 
                 <FormControl fullWidth className={classes.formControl}>

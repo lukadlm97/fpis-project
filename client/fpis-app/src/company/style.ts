@@ -8,6 +8,13 @@ export default makeStyles((theme: Theme) =>createStyles({
             margin:'1rem 0'
         },
     },
+    option: {
+      fontSize: 15,
+      '& > span': {
+        marginRight: 10,
+        fontSize: 18,
+      },
+    },
             button: {
                 display: 'block',
                 marginTop: theme.spacing(2),
